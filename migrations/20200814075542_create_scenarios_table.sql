@@ -1,0 +1,16 @@
+-- Add migration script here
+CREATE TABLE IF NOT EXISTS sets
+(
+    id     BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name   VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS scenarios
+(
+    id      BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title   VARCHAR(255) NOT NULL UNIQUE,
+    code    VARCHAR(255) NOT NULL UNIQUE,
+    set_id  BIGINT,
+    number  SMALLINT,
+    FOREIGN KEY(set_id) REFERENCES sets(id)
+);

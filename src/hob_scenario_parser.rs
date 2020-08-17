@@ -7,7 +7,7 @@ struct HobScenario {
     pub title: String,
     pub slug: String,
     pub product: String,
-    pub number: usize,
+    pub number: i16,
     pub quest_cards: Vec<String>,
     pub scenario_cards: Vec<String>,
 }
@@ -16,7 +16,7 @@ struct HobScenario {
 pub struct Scenario {
     pub title: String,
     pub set: String,
-    pub number: usize,
+    pub number: i16,
 }
 
 pub async fn fetch() -> Result<Vec<Scenario>, Box<dyn std::error::Error>> {
@@ -47,6 +47,8 @@ pub async fn fetch() -> Result<Vec<Scenario>, Box<dyn std::error::Error>> {
     ];
 
     let mut last_deluxe = String::new();
+    // Hall of Beorn has duplicate numbers in the data, so we'll increment ourselves
+    let mut standalone_scenario_number = 0;
     let scenarios = hob_scenarios
         .into_iter()
         .filter(|s| s.product != "First Age")
@@ -57,6 +59,7 @@ pub async fn fetch() -> Result<Vec<Scenario>, Box<dyn std::error::Error>> {
             }
 
             let set = if s.product.parse::<u32>().is_ok() {
+                standalone_scenario_number += 1;
                 "Standalone Scenarios".to_string()
             } else if others.iter().find(|&&o| o == s.product).is_some() {
                 s.product.clone()
@@ -66,10 +69,16 @@ pub async fn fetch() -> Result<Vec<Scenario>, Box<dyn std::error::Error>> {
                 last_deluxe.clone()
             };
 
+            let number = if set == "Standalone Scenarios" {
+                standalone_scenario_number
+            } else {
+                s.number
+            };
+
             Scenario {
                 title: s.title,
                 set,
-                number: s.number,
+                number,
             }
         })
         .collect();
