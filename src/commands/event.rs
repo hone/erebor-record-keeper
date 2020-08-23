@@ -658,3 +658,44 @@ WHERE event_id = $2
 
     Ok(())
 }
+
+#[command]
+/// Display how much of the event quests are complete
+pub async fn progress(ctx: &Context, msg: &Message) -> CommandResult {
+    let data = ctx.data.read().await;
+    let pool = data
+        .get::<PostgresPool>()
+        .expect("Expected PostgresPool in TypeMap.");
+
+    if let Some(event) = Event::find_by_active(pool, true).await? {
+        let calc = sqlx::query!(
+            r#"
+SELECT (cnt/total::float)*100 AS perc
+FROM (
+    SELECT COUNT(*) AS total,
+        SUM(CASE WHEN complete = true THEN 1 ELSE 0 END) AS cnt
+    FROM events_scenarios
+    WHERE event_id = $1
+) x
+"#,
+            event.id
+        )
+        .fetch_one(pool)
+        .await?;
+
+        if let Some(perc) = calc.perc {
+            msg.channel_id
+                .say(
+                    &ctx.http,
+                    format!("The fellowship has completed {:.2}% of quests.", perc),
+                )
+                .await?;
+        } else {
+            msg.channel_id
+                .say(&ctx.http, "Could not calculate progress.")
+                .await?;
+        }
+    }
+
+    Ok(())
+}
