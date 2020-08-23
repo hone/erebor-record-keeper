@@ -29,7 +29,7 @@ struct General;
 
 #[group]
 #[prefix = "event"]
-#[commands(add, archive, create, equest, set)]
+#[commands(add, archive, complete, create, equest, set)]
 struct Event;
 
 #[tokio::main]

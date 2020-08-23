@@ -273,10 +273,10 @@ INSERT INTO events_scenarios ( event_id, scenario_id )
 SELECT $1, scenarios.id
 FROM scenarios
 WHERE scenarios.set_id = $2
-  AND scenarios.id NOT IN (
-    SELECT scenario_id
-    FROM events_scenarios
-    WHERE event_id = $1
+    AND scenarios.id NOT IN (
+        SELECT scenario_id
+        FROM events_scenarios
+        WHERE event_id = $1
   )
 "#,
                     event.id,
@@ -299,9 +299,9 @@ INSERT INTO events_scenarios ( event_id, scenario_id )
 SELECT $1, scenarios.id
 FROM scenarios
 WHERE scenarios.id NOT IN (
-  SELECT scenario_id
-  FROM events_scenarios
-  WHERE event_id = $1
+    SELECT scenario_id
+    FROM events_scenarios
+    WHERE event_id = $1
 )
 "#,
                 event.id,
@@ -332,7 +332,7 @@ pub async fn set(ctx: &Context, msg: &Message) -> CommandResult {
 SELECT id, name
 FROM events
 WHERE active = false
-  AND archive = false
+    AND archive = false
 "#
     )
     .fetch_all(pool)
@@ -410,7 +410,7 @@ pub async fn archive(ctx: &Context, msg: &Message) -> CommandResult {
             r#"
 UPDATE events
 SET active = false,
-  archive = true
+    archive = true
 WHERE id = $1
 "#,
             event.id
@@ -448,8 +448,9 @@ pub async fn equest(ctx: &Context, msg: &Message, mut args: Args) -> CommandResu
 SELECT scenarios.title, sets.name AS set_name, scenarios.code
 FROM scenarios, events_scenarios, sets
 WHERE scenarios.id = events_scenarios.scenario_id
-  AND events_scenarios.event_id = $1
-  AND scenarios.set_id = sets.id
+    AND events_scenarios.event_id = $1
+    AND scenarios.set_id = sets.id
+    AND events_scenarios.complete = false
 ORDER BY RANDOM()
 LIMIT $2
 "#,
@@ -461,7 +462,7 @@ LIMIT $2
 
         if scenarios.is_empty() {
             msg.channel_id
-                .say(&ctx.http, "No quests registered with this event.")
+                .say(&ctx.http, "No more quests registered with this event.")
                 .await?;
         } else {
             msg.channel_id
@@ -485,6 +486,76 @@ LIMIT $2
         msg.channel_id
             .say(&ctx.http, "No active event found.")
             .await?;
+    }
+
+    Ok(())
+}
+
+#[command]
+#[num_args(1)]
+/// Complete a quest
+pub async fn complete(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
+    if let Ok(code) = args.single::<String>() {
+        let data = ctx.data.read().await;
+        let pool = data
+            .get::<PostgresPool>()
+            .expect("Expected PostgresPool in TypeMap.");
+
+        let event;
+        if let Some(e) = Event::find_by_active(pool, true).await? {
+            event = e;
+        } else {
+            msg.channel_id
+                .say(&ctx.http, "No active event found.")
+                .await?;
+
+            return Ok(());
+        }
+
+        let scenario;
+        if let Ok(s) = sqlx::query!(
+            r#"
+SELECT id, title
+FROM scenarios
+WHERE code = $1
+"#,
+            code
+        )
+        .fetch_one(pool)
+        .await
+        {
+            scenario = s;
+        } else {
+            msg.channel_id
+                .say(
+                    &ctx.http,
+                    format!("No scenario found by that code: {}", code),
+                )
+                .await?;
+
+            return Ok(());
+        }
+
+        let row_count = sqlx::query!(
+            r#"
+UPDATE events_scenarios
+SET complete = true
+WHERE event_id = $1
+    AND scenario_id = $2
+"#,
+            event.id,
+            scenario.id,
+        )
+        .execute(pool)
+        .await?
+        .rows_affected();
+
+        // Not sure this else can be triggered
+        if row_count > 0 {
+            msg.channel_id
+                .say(&ctx.http, format!("Completed Quest: {}", scenario.title))
+                .await?;
+        }
     }
 
     Ok(())
