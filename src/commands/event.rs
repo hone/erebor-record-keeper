@@ -218,7 +218,7 @@ pub async fn add(ctx: &Context, msg: &Message) -> CommandResult {
     if let Some(choice) = &msg
         .author
         .await_reply(&ctx)
-        .timeout(Duration::from_secs(10))
+        .timeout(Duration::from_secs(SELECTION_TIMEOUT))
         .await
     {
         if choice.content == "1" {
