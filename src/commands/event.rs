@@ -349,7 +349,8 @@ WHERE active = false
         sqlx::query!(
             r#"
 UPDATE events
-SET active = false
+SET active = false,
+    updated_at = CURRENT_TIMESTAMP
 WHERE active = true
 "#
         )
@@ -359,7 +360,8 @@ WHERE active = true
         sqlx::query!(
             r#"
 UPDATE events
-SET active = true
+SET active = true,
+    updated_at = CURRENT_TIMESTAMP
 WHERE id = $1"#,
             event.id
         )
@@ -410,7 +412,8 @@ pub async fn archive(ctx: &Context, msg: &Message) -> CommandResult {
             r#"
 UPDATE events
 SET active = false,
-    archive = true
+    archive = true,
+    updated_at = CURRENT_TIMESTAMP
 WHERE id = $1
 "#,
             event.id
@@ -443,6 +446,19 @@ pub async fn equest(ctx: &Context, msg: &Message, mut args: Args) -> CommandResu
         .expect("Expected PostgresPool in TypeMap.");
 
     if let Some(event) = Event::find_by_active(pool, true).await? {
+        let times = sqlx::query!(r#"
+SELECT cast(extract(epoch from current_timestamp) AS integer) AS current, cast(extract(epoch from CURRENT_TIMESTAMP - INTERVAL '1 minutes') AS integer) AS interval, cast(extract(epoch from events_scenarios.checkout) AS integer) AS checkout
+FROM events_scenarios
+WHERE events_scenarios.event_id = $1
+"#, event.id).fetch_all(pool).await?;
+        for time in times.iter() {
+            println!(
+                "{} | {} | {}",
+                time.current.unwrap_or(0),
+                time.interval.unwrap_or(0),
+                time.checkout.unwrap_or(0)
+            );
+        }
         let scenarios = sqlx::query!(
             r#"
 SELECT scenarios.title, sets.name AS set_name, scenarios.code
@@ -451,6 +467,7 @@ WHERE scenarios.id = events_scenarios.scenario_id
     AND events_scenarios.event_id = $1
     AND scenarios.set_id = sets.id
     AND events_scenarios.complete = false
+    AND (events_scenarios.checkout IS NULL OR events_scenarios.checkout < CURRENT_TIMESTAMP - INTERVAL '2 hours')
 ORDER BY RANDOM()
 LIMIT $2
 "#,
@@ -539,7 +556,8 @@ WHERE code = $1
         let row_count = sqlx::query!(
             r#"
 UPDATE events_scenarios
-SET complete = true
+SET complete = true,
+    updated_at = CURRENT_TIMESTAMP
 WHERE event_id = $1
     AND scenario_id = $2
 "#,
@@ -555,6 +573,86 @@ WHERE event_id = $1
             msg.channel_id
                 .say(&ctx.http, format!("Completed Quest: {}", scenario.title))
                 .await?;
+        }
+    }
+
+    Ok(())
+}
+
+#[command]
+#[num_args(1)]
+/// Checkout a Quest
+pub async fn checkout(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
+    if let Ok(code) = args.single::<String>() {
+        let data = ctx.data.read().await;
+        let pool = data
+            .get::<PostgresPool>()
+            .expect("Expected PostgresPool in TypeMap.");
+
+        let event;
+        if let Some(e) = Event::find_by_active(pool, true).await? {
+            event = e;
+        } else {
+            msg.channel_id
+                .say(&ctx.http, "No active event found.")
+                .await?;
+
+            return Ok(());
+        }
+
+        let scenario;
+        if let Ok(s) = sqlx::query!(
+            r#"
+SELECT id, title
+FROM scenarios
+WHERE code = $1
+"#,
+            code
+        )
+        .fetch_one(pool)
+        .await
+        {
+            scenario = s;
+        } else {
+            msg.channel_id
+                .say(
+                    &ctx.http,
+                    format!("No scenario found by that code: {}", code),
+                )
+                .await?;
+
+            return Ok(());
+        }
+
+        if let Ok(result) = sqlx::query!(
+            r#"
+UPDATE events_scenarios
+SET checkout = CURRENT_TIMESTAMP,
+    checkout_user = $1,
+    updated_at = CURRENT_TIMESTAMP
+WHERE event_id = $2
+    AND scenario_id = $3
+    AND (checkout IS NULL OR checkout < CURRENT_TIMESTAMP - INTERVAL '2 hours')
+"#,
+            &msg.author.name,
+            event.id,
+            scenario.id,
+        )
+        .execute(pool)
+        .await
+        {
+            if result.rows_affected() > 0 {
+                msg.channel_id
+                    .say(&ctx.http, format!("Reserving Quest **{}**", scenario.title))
+                    .await?;
+            } else {
+                msg.channel_id
+                    .say(
+                        &ctx.http,
+                        format!("Quest **{}** is already reserved.", scenario.title),
+                    )
+                    .await?;
+            }
         }
     }
 
