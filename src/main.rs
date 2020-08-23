@@ -1,26 +1,18 @@
-use erebor_record_keeper::hob_scenario_parser::{fetch, Scenario};
+mod commands;
+
+use commands::{event::*, quest::*};
 use serenity::{
     async_trait,
     client::Client,
-    framework::standard::{
-        macros::{command, group},
-        Args, CommandResult, StandardFramework,
-    },
-    model::{channel::Message, gateway::Ready},
+    framework::standard::{macros::group, StandardFramework},
+    model::gateway::Ready,
     prelude::{Context, EventHandler, TypeMapKey},
 };
 use sqlx::postgres::PgPoolOptions;
 
-const DEFAULT_QUESTS_NUM: i64 = 3;
-
-struct PostgresPool;
+pub struct PostgresPool;
 impl TypeMapKey for PostgresPool {
     type Value = sqlx::postgres::PgPool;
-}
-
-struct QuestData;
-impl TypeMapKey for QuestData {
-    type Value = Vec<Scenario>;
 }
 
 struct Handler;
@@ -32,52 +24,13 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(ping, quest)]
+#[commands(quest)]
 struct General;
 
-#[command]
-async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.channel_id.say(&ctx.http, "Pong!").await?;
-
-    Ok(())
-}
-
-#[command]
-async fn quest(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
-    let quantity = args.single::<i64>().unwrap_or(DEFAULT_QUESTS_NUM);
-    let data = ctx.data.read().await;
-    let pool = data
-        .get::<PostgresPool>()
-        .expect("Expected PgPoolOptions in TypeMap.");
-    let scenarios = sqlx::query!(
-        r#"
-SELECT scenarios.title, sets.name AS set
-FROM scenarios, sets
-WHERE scenarios.set_id = sets.id
-ORDER BY RANDOM()
-LIMIT $1;
-"#,
-        quantity
-    )
-    .fetch_all(pool)
-    .await?;
-
-    for (i, scenario) in scenarios.iter().enumerate() {
-        msg.channel_id
-            .say(
-                &ctx.http,
-                format!(
-                    "**Quest {}**: {} from {}",
-                    i + 1,
-                    scenario.title,
-                    scenario.set,
-                ),
-            )
-            .await?;
-    }
-
-    Ok(())
-}
+#[group]
+#[prefix = "event"]
+#[commands(add, archive, create, equest, set)]
+struct Event;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -99,15 +52,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .framework(
             StandardFramework::new()
                 .configure(|c| c.prefix("!"))
+                .group(&EVENT_GROUP)
                 .group(&GENERAL_GROUP),
         )
         .await?;
     {
-        let scenarios = fetch().await.unwrap();
-        println!("Loading all {} scenarios", scenarios.len());
         let mut data = client.data.write().await;
         data.insert::<PostgresPool>(pool);
-        data.insert::<QuestData>(scenarios);
+        println!("Connected to Postgres.");
     }
 
     if let Err(why) = client.start().await {
