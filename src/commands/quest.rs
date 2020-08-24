@@ -1,4 +1,4 @@
-use crate::PostgresPool;
+use crate::utils::PostgresPool;
 use serenity::{
     framework::standard::{macros::command, Args, CommandResult},
     model::channel::Message,

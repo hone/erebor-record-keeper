@@ -1,4 +1,6 @@
 mod commands;
+mod models;
+mod utils;
 
 use commands::{event::*, quest::*};
 use serenity::{
@@ -6,14 +8,9 @@ use serenity::{
     client::Client,
     framework::standard::{macros::group, StandardFramework},
     model::gateway::Ready,
-    prelude::{Context, EventHandler, TypeMapKey},
+    prelude::{Context, EventHandler},
 };
 use sqlx::postgres::PgPoolOptions;
-
-pub struct PostgresPool;
-impl TypeMapKey for PostgresPool {
-    type Value = sqlx::postgres::PgPool;
-}
 
 struct Handler;
 #[async_trait]
@@ -58,7 +55,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     {
         let mut data = client.data.write().await;
-        data.insert::<PostgresPool>(pool);
+        data.insert::<utils::PostgresPool>(pool);
         println!("Connected to Postgres.");
     }
 
