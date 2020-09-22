@@ -15,8 +15,8 @@ WHERE active = true;
 CREATE TABLE IF NOT EXISTS events_scenarios
 (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	event_id BIGINT,
-	scenario_id BIGINT,
+	event_id BIGINT NOT NULL,
+	scenario_id BIGINT NOT NULL,
 	complete BOOLEAN DEFAULT false,
 	checkout TIMESTAMP,
 	checkout_user VARCHAR(255),
