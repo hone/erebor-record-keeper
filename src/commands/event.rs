@@ -49,7 +49,7 @@ pub async fn create(ctx: &Context, msg: &Message, mut args: Args) -> CommandResu
 }
 
 #[command]
-/// Add scenerios to an event
+/// Add scenarios to an event
 pub async fn add(ctx: &Context, msg: &Message) -> CommandResult {
     let data = ctx.data.read().await;
     let pool = data
