@@ -8,6 +8,7 @@ use serenity::{
     framework::standard::{macros::command, Args, CommandResult},
     model::channel::Message,
     prelude::Context,
+    utils::MessageBuilder,
 };
 use sqlx::prelude::Done;
 use std::time::Duration;
@@ -578,6 +579,100 @@ FROM (
                 .await?;
         }
     }
+
+    Ok(())
+}
+
+#[command]
+#[num_args(1)]
+/// Complete Challenge
+pub async fn ccomplete(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
+    let code = match args.single::<String>() {
+        Ok(code) => code,
+        Err(_) => {
+            utils::check_msg(
+                msg.channel_id
+                    .say(
+                        &ctx.http,
+                        "Requires an argument: !event ccomplete <challenge code>",
+                    )
+                    .await,
+            );
+
+            return Ok(());
+        }
+    };
+    let data = ctx.data.read().await;
+    let pool = data
+        .get::<PostgresPool>()
+        .expect("Expected PostgresPool in TypeMap.");
+
+    let event = match Event::find_by_active(&pool, true).await? {
+        Some(event) => event,
+        None => {
+            utils::check_msg(
+                msg.channel_id
+                    .say(&ctx.http, "There is no active event.")
+                    .await,
+            );
+
+            return Ok(());
+        }
+    };
+    let challenge_event = sqlx::query!(
+        r#"
+SELECT challenges_events.id, challenges.name
+FROM challenges, challenges_events, events
+WHERE challenges.code = $1
+    AND events.id = $2
+    AND challenges_events.challenge_id = challenges.id
+    AND challenges_events.event_id = events.id
+    "#,
+        code,
+        event.id
+    )
+    .fetch_all(pool)
+    .await?
+    .pop();
+
+    let challenge_event = match challenge_event {
+        Some(challenge_event) => challenge_event,
+        None => {
+            utils::check_msg(
+                msg.channel_id
+                    .say(&ctx.http, "Could not find a challenge by that code.")
+                    .await,
+            );
+
+            return Ok(());
+        }
+    };
+
+    let mut reply = MessageBuilder::new();
+    let mut users: Vec<&serenity::model::user::User> = msg.mentions.iter().map(|u| u).collect();
+    users.push(&msg.author);
+
+    for discord_user in users {
+        let user = User::find_or_create(pool, discord_user.id.as_u64(), &discord_user.name).await?;
+        sqlx::query!(
+            r#"
+INSERT INTO challenges_events_users ( challenges_events_id, user_id )
+VALUES ( $1, $2 )
+"#,
+            challenge_event.id,
+            user.id
+        )
+        .execute(pool)
+        .await?;
+        reply.mention(discord_user);
+    }
+
+    reply.push(format!(
+        "You've all completed challenge '{}'",
+        challenge_event.name
+    ));
+
+    utils::check_msg(msg.channel_id.say(&ctx.http, &reply.build()).await);
 
     Ok(())
 }

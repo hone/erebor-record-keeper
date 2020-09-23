@@ -61,3 +61,10 @@ pub async fn pick_sets(ctx: &Context, msg: &Message) -> anyhow::Result<Option<i6
     let set_id = pick_collection(ctx, msg, &sets).await?.map(|set| set.id);
     Ok(set_id)
 }
+
+/// Checks that a message successfully sent; if not, then logs why to stderr.
+pub fn check_msg(result: serenity::Result<Message>) {
+    if let Err(why) = result {
+        eprintln!("Error sending message: {:?}", why);
+    }
+}
