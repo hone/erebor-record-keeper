@@ -1,5 +1,9 @@
 use crate::utils::PostgresPool;
-use crate::{commands::quest, models::event::Event, utils};
+use crate::{
+    commands::quest,
+    models::{event::Event, user::User},
+    utils,
+};
 use serenity::{
     framework::standard::{macros::command, Args, CommandResult},
     model::channel::Message,
@@ -501,17 +505,18 @@ WHERE code = $1
             return Ok(());
         }
 
+        let user = User::find_or_create(pool, msg.author.id.as_u64(), &msg.author.name).await?;
         if let Ok(result) = sqlx::query!(
             r#"
 UPDATE events_scenarios
 SET checkout = CURRENT_TIMESTAMP,
-    checkout_user = $1,
+    checkout_user_id = $1,
     updated_at = CURRENT_TIMESTAMP
 WHERE event_id = $2
     AND scenario_id = $3
     AND (checkout IS NULL OR checkout < CURRENT_TIMESTAMP - INTERVAL '2 hours')
 "#,
-            &msg.author.name,
+            user.id,
             event.id,
             scenario.id,
         )
