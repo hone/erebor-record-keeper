@@ -1,0 +1,229 @@
+code_prefix = "CON18"
+
+[[challenge]]
+name = "Hello, I'm Baggins"
+description = "Defeat the quest after having failed every **Hide** test"
+scenario = "A Shadow of the Past"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "World Travelers"
+description = "Explore all unique locations (**Bag-End**, **Woody End**, **Bamfurlong**, **Bucklebury Ferry**, **Stock-Brook**)"
+scenario = "A Shadow of the Past"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Hey! Ho!"
+description = "Defeat two enemies with Tom Bombadil participating in the attacks."
+scenario = "The Old Forest"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Trees v.s. Trees"
+description = "Defeat the quest with two players controlling **Ent** heroes"
+scenario = "The Old Forest"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Tell Me, Where Is Gandalf?"
+description = "Allow **Gandalf** to be trapped inside an Ancient Barrow"
+scenario = "Fog on the Barrow-downs"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Strength of Will"
+description = "Escape a Barrow with only one character questing during your imprisonment"
+scenario = "Fog on the Barrow-downs"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Waste of a Good Apple"
+description = "Defeat **Bill Ferny** in round one or two"
+scenario = "A Knife in the Dark"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Massing at Night"
+description = "Win after having added every **Nazgul** enemy to the encounter deck"
+scenario = "A Knife in the Dark"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Speedy Delivery"
+description = "Defeat the quest with 8+ health remaining on **Frodo**"
+scenario = "Flight to the Ford"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Revealed in Wrath"
+description = "Defeat the quest after having discarded 6+ **Nazgul** enemies via the Ford of Bruinen forced effect"
+scenario = "Flight to the Ford"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "The Hunts is Up!"
+description = "Kill six enemies with the **Warg** trait in one round"
+scenario = "The Ring Goes South"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Like Shooting Fish in a Barrel"
+description = "Rescue **Frodo** in the same round he is captured by **The Watcher in the Water**"
+scenario = "The Ring Goes South"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Fly, You Fools!"
+description = "Defeat the quest with 1+ tokens on Doom, Doom, Doom, having never confronted the **Balrog**"
+scenario = "Journey in the Dark"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Fool of a Took!"
+description = "Defeat the **Balrog** by sacrificing **Pippin**"
+scenario = "Journey in the Dark"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "A Hero's Sacrifice"
+description = "Destroy a hero that has **Fallen Into Evil**"
+scenario = "Breaking of the Fellowship"
+attributes = ["Con of the Rings 2018", "climactic"]
+
+[[challenge]]
+name = "Rough Ride"
+description = "Note each character damaged by the **Sarn Gebir** location. Defeat the quest with all these characters still in play."
+scenario = "Breaking of the Fellowship"
+attributes = ["Con of the Rings 2018", "climactic"]
+
+[[challenge]]
+name = "Wingfoot"
+description = "Catch up with the Uruks on Stage 1 within three rounds"
+scenario = "The Uruk-hai"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "A Unlikely Friendship"
+description = "Defeat the quest with **Legolas** and **Gimli** in two separate decks."
+scenario = "The Uruk-hai"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Hold the Line!"
+description = "Defeat the quest without traveling to quest stage 4"
+scenario = "Helm's Deep"
+attributes = ["Con of the Rings 2018", "climactic"]
+
+[[challenge]]
+name = "Devilry Upon Devilry"
+description = "Defeat the quest after **Devilry of Saruman's** \"when revealed\" effect triggered 3+ times"
+scenario = "Helm's Deep"
+attributes = ["Con of the Rings 2018", "climactic"]
+
+[[challenge]]
+name = "Entmoot"
+description = "Defeat the quest with 15 **Ent** characters in play on the last round"
+scenario = "The Road to Isengard"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Yes, All of Them"
+description = "Rouse all four **Ents of Fangorn** to join you in you quest"
+scenario = "The Road to Isengard"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "It Burns! It Freezes!"
+description = "Tame Smeagol at least 3 times during the quest"
+scenario = "The Passage of the Marshes"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Enough of You"
+description = "Tame **Smeagol** round 1 and defeat the quest without him ever returned to his **Gollum** side"
+scenario = "The Passage of the Marshes"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Perfect Score"
+description = "Defeat the quest without a single card underneath **The Black Gate**"
+scenario = "Journey to the Cross-roads"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Close Enough"
+description = "Defeat the quest with X-1 cards underneath **The Black Gate** (1 card away from defeat)"
+scenario = "Journey to the Cross-roads"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Taste It Again!"
+description = "Defeat **Shelob** using the Response effect on **Sting**"
+scenario = "Shelob's Lair"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Taking the Long Route"
+description = "Complete at least 3 side quests before travelling to **Smeagol's Secret Way**"
+scenario = "Shelob's Lair"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Swift Shadows"
+description = "Have at least 1 player finish the quest with a threat below 40"
+scenario = "The Passing of the Grey Company"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "I'd Never Hear the End of It"
+description = "Beat the quest without ever removing a copy of **Overcome by Fear** from any player's threat dial."
+scenario = "The Passing of the Grey Company"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Speedy Siege"
+description = "Defeat the quest in six or fewer rounds"
+scenario = "The Siege of Gondor"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Mind Your Aim!"
+description = "Defeat a **Corsair Captain** before it ever attacks"
+scenario = "The Siege of Gondor"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "I am no Man, Take Two"
+description = "Destroy the **Witch King** in one attack using only **Eowyn** and **Merry**"
+scenario = "The Battle of the Pelennor Fields"
+attributes = ["Con of the Rings 2018", "climactic"]
+
+[[challenge]]
+name = "It Only Counts As One"
+description = "Destroy (not discard) 2 or more **Mumaks**"
+scenario = "The Battle of the Pelennor Fields"
+attributes = ["Con of the Rings 2018", "climactic"]
+
+[[challenge]]
+name = "Infighting"
+description = "Discard two enemies per player using encounter card effects"
+scenario = "The Tower of Cirith Ungol"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "Not If I Stick You First!"
+description = "**Sam Gamgee** alone must destroy **Shagrat** and **Gorbag**"
+scenario = "The Tower of Cirith Ungol"
+attributes = ["Con of the Rings 2018"]
+
+[[challenge]]
+name = "True to Tolkien"
+description = "Defeat the quest with four players at the **Black Gate** and two players at **Mount Doom**"
+scenario = "The Black Gate Opens"
+attributes = ["Con of the Rings 2018", "climactic"]
+
+[[challenge]]
+name = "The Hour of Doom"
+description = "Survive eight or more rounds at **The Black Gate**"
+scenario = "Mount Doom"
+attributes = ["Con of the Rings 2018", "climactic"]

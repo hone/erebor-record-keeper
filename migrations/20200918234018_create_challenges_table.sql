@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS challenges
 	code        VARCHAR(255) NOT NULL UNIQUE,
 	description TEXT,
 	scenario_id BIGINT,
+	attributes  VARCHAR(255) [],
 	created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY(scenario_id) REFERENCES scenarios(id)

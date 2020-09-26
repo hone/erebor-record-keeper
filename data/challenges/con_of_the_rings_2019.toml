@@ -1,0 +1,229 @@
+code_prefix = "CON19"
+
+[[challenge]]
+name = "Ain't No Party Like An Orc War Party"
+description = "Defeat an Orc War Party on the first round."
+scenario = "Intruders in Chetwood"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Who Needs A Map?"
+description = "**Setup** - Set Lost in the Wilderness aside, out of play. Forced: At the end of the first quest phase, reveal Lost in the Wilderness and add it to the staging area. Lost in the Wilderness cannot leave play for the remainder of the game."
+scenario = "Intruders in Chetwood"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Weathered Mountaintop"
+description = "Have a Weathered Hilltop reach 5 or more threat in the staging area (10 or more in a 3 or 4 player game)."
+scenario = "The Weather Hills"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Not Bothered by the Rain"
+description = "Finish the quest without healing any characters."
+scenario = "The Weather Hills"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Army of Darkness"
+description = "Have Cursed Dead's \"when revealed\" effect return 4 or more other Cursed Dead from the discard pile."
+scenario = "Deadmen's Dike"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Time Runs Short"
+description = "**Setup** - Each player discards the top 10 cards of their deck."
+scenario = "Deadmen's Dike"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Here Puppy, Puppy, Puppy"
+description = "Have Daybreak return X number of enemies to the staging area, where X is twice the number of players."
+scenario = "The Wastes of Eriador"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Why Even Bother"
+description = "Do not cancel any \"When Revealed\" effects."
+scenario = "The Wastes of Eriador"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Quick Getaway"
+description = "Have a player raise their threat by 10 or more when the group travels to the Southern Gate."
+scenario = "Escape from Mount Gram"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "All Right Then, Keep Your Secrets"
+description = "Allow 4 or more allies to be captured by a single Cruel Torturer."
+scenario = "Escape from Mount Gram"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "No Place is Safe"
+description = "Do not travel to any Safe locations."
+scenario = "Across the Ettenmoors"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "The Savagest Spawn"
+description = "Have a Savage Trollspawn attack for 8 or more."
+scenario = "Across the Ettenmoors"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "You Shall Not Pass"
+description = "Defeat every Host of Angmar on the round they enter play in Epic Multiplayer Mode."
+scenario = "The Siege of Annúminas"
+attributes = ["Con of the Rings 2019", "climactic"]
+
+[[challenge]]
+name = "Behind Strong Walls"
+description = "Win the quest with 20 or more health remaining on Annuminas in Epic Multiplayer Mode (10 or more health in standard mode)."
+scenario = "The Siege of Annúminas"
+attributes = ["Con of the Rings 2019", "climactic"]
+
+[[challenge]]
+name = "Endless Spirits"
+description = "**Setup** - Add Seal the Tomb to the staging area (ignore surge). Seal the Tomb cannot leave the staging area."
+scenario = "The Treachery of Rhudaur"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Why Wait for the Treachery?"
+description = "Complete all three Treachery of Rhudaur side quests."
+scenario = "The Treachery of Rhudaur"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "The Shadow of Angmar"
+description = "Have a defending character survive an attack from an enemy with 6 or more shadow cards."
+scenario = "The Battle of Carn Dûm"
+attributes = ["Con of the Rings 2019", "climactic"]
+
+[[challenge]]
+name = "Move With Haste"
+description = "Advance past stage 1 prior to Thaurdir flipping to his champion side."
+scenario = "The Battle of Carn Dûm"
+attributes = ["Con of the Rings 2019", "climactic"]
+
+[[challenge]]
+name = "Rapid Escape"
+description = "Clear stage 3 without ever taking damage from the stage's effect."
+scenario = "The Dread Realm"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Overwhelmed"
+description = "During setup, each player reanimates the top 3 cards of their deck instead of the top 1."
+scenario = "The Dread Realm"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "I Sunk Your Battleships"
+description = "Have 2 Corsair Warships in the victory display."
+scenario = "Voyage Across Belegaer"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "What Do I Do With This Rope?"
+description = "Fail every Sailing test."
+scenario = "Voyage Across Belegaer"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Scouting Party"
+description = "**Setup**- Add 2 copies of Lost Island to the staging area (3 copies in a 3 or 4 player game)."
+scenario = "The Fate of Númenor"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Chumps"
+description = "Have Curse of the Downfallen destroy 5 or more allies at once (10 or more in a 3 or 4 player game)."
+scenario = "The Fate of Númenor"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Not Even A Scratch"
+description = "Defeat the quest with 0 cards underneath The Havens Burn."
+scenario = "Raid on the Grey Havens"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Raider's Paradise"
+description = "**Modification** - At the end of the round add 1 resource to each raider enemy in play."
+scenario = "Raid on the Grey Havens"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Mutiny"
+description = "Whenever an effect gives a choice, always choose to go off-course."
+scenario = "Flight of the Stormcaller"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Let The Storm Rage On"
+description = "**Setup** - Attach Raging Squall to the players' quest stage 1. Attach Raging Sqall to the players' quest stage for each stage thereafter."
+scenario = "Flight of the Stormcaller"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Let's Be Hasty"
+description = "Travel to Helm of the Storm-caller on the first round."
+scenario = "The Thing in the Depths"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Calamari Chef"
+description = "Deal at least X damage to The Thing in the Depths in a single round, where X is equal to half of The Thing in the Depths' total hit points."
+scenario = "The Thing in the Depths"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "We're Gonna Need a Bigger Sword"
+description = "**Modification** - When preparing the Island Map, place a Cursed Temple as the top-left location. Choose Cursed Temple as the starting active location."
+scenario = "Temple of the Deceived"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Welcome to the Jungle"
+description = "**Modification** - When calculating the threat of the staging area, include all diagonally adjacent locations."
+scenario = "Temple of the Deceived"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "But I Don't Even Have My Swimsuit On Yet"
+description = "**Setup** - Search the encounter deck for a copy of Drowned Cave and make it the active location."
+scenario = "The Drowned Ruins"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Professional Diver"
+description = "Explore an underwater location worth any number of victory points while it is in the staging area."
+scenario = "The Drowned Ruins"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "**Armada of the Free Peoples**"
+description = "Have X ships under the players' control at the end of the quest, where X is 2 more than the number of players."
+scenario = "A Storm on Cobas Haven"
+attributes = ["Con of the Rings 2019", "climactic"]
+
+[[challenge]]
+name = "Was That It?"
+description = "Destroy the Raider Flagship before stage 3."
+scenario = "A Storm on Cobas Haven"
+attributes = ["Con of the Rings 2019", "climactic"]
+
+[[challenge]]
+name = "Soft Docking"
+description = "Have no characters take damage from the effect on stage 2A."
+scenario = "The City of Corsairs"
+attributes = ["Con of the Rings 2019"]
+
+[[challenge]]
+name = "Well, That Got Out of Hand"
+description = "Allow Sahir to have 5 or more resources at once (10 or more in a 3 or 4 player game)."
+scenario = "The City of Corsairs"
+attributes = ["Con of the Rings 2019"]
