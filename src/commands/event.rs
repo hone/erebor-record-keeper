@@ -11,7 +11,7 @@ use serenity::{
     utils::MessageBuilder,
 };
 use sqlx::prelude::Done;
-use std::time::Duration;
+use std::{collections::HashMap, time::Duration};
 
 // TODO set permissions on commands
 
@@ -570,8 +570,180 @@ FROM (
     Ok(())
 }
 
+// Struct for rows in cquest
+#[derive(Debug)]
+struct ChallengeRow<'a> {
+    name: &'a str,
+    code: &'a str,
+    description: Option<&'a str>,
+}
+
 #[command]
-#[num_args(1)]
+/// Return a list of challenges
+pub async fn cquest(ctx: &Context, msg: &Message) -> CommandResult {
+    let quest_count = 3;
+    let data = ctx.data.read().await;
+    let pool = data
+        .get::<PostgresPool>()
+        .expect("Expected PostgresPool in TypeMap.");
+
+    let event = match Event::find_by_active(pool, true).await? {
+        Some(event) => event,
+        None => {
+            msg.channel_id
+                .say(&ctx.http, "No active event found.")
+                .await?;
+
+            return Ok(());
+        }
+    };
+
+    let rows = sqlx::query!(
+        r#"
+WITH completed_challenges AS (
+        SELECT challenges.id, challenges.scenario_id
+        FROM challenges_events_users, users, challenges_events, challenges
+        WHERE challenges_events_users.user_id = users.id
+            AND users.discord_id = $3
+            AND challenges_events_users.challenges_events_id = challenges_events.id
+            AND challenges_events.event_id = $1
+            AND challenges_events.challenge_id = challenges.id
+),
+completed_challenges_by_scenarios AS (
+        SELECT scenario_id AS id, COUNT(id) AS count
+        FROM completed_challenges
+        GROUP BY scenario_id
+),
+challenge_count AS (
+        SELECT challenges.scenario_id AS id, COUNT(challenges.id) AS count
+        FROM challenges_events, challenges
+        WHERE challenges_events.event_id = $1
+                AND challenges_events.challenge_id = challenges.id
+        GROUP BY challenges.scenario_id
+),
+completed_scenarios AS (
+    SELECT completed_challenges_by_scenarios.id
+    FROM completed_challenges_by_scenarios, challenge_count
+    WHERE challenge_count.id = completed_challenges_by_scenarios.id
+            AND challenge_count.count = completed_challenges_by_scenarios.count
+),
+chosen_scenarios AS (
+    SELECT scenarios.id, scenarios.title
+    FROM scenarios, events_scenarios
+    WHERE events_scenarios.event_id = $1
+        AND events_scenarios.scenario_id = scenarios.id
+        AND scenarios.id NOT IN (
+            SELECT id
+            FROM completed_scenarios
+        )
+ORDER BY RANDOM()
+LIMIT $2
+)
+
+SELECT challenges.name, challenges.code, challenges.description, chosen_scenarios.title
+FROM chosen_scenarios, challenges_events, challenges
+WHERE challenges_events.event_id = $1
+    AND challenges_events.challenge_id = challenges.id
+    AND challenges.scenario_id = chosen_scenarios.id
+    AND challenges.id NOT IN (
+        SELECT id
+        FROM completed_challenges
+    )
+"#,
+        event.id,
+        quest_count,
+        *msg.author.id.as_u64() as i64
+    )
+    .fetch_all(pool)
+    .await?;
+
+    if rows.is_empty() {
+        msg.channel_id
+            .say(&ctx.http, "No challenges found.")
+            .await?;
+
+        return Ok(());
+    }
+
+    let mut scenarios: HashMap<&str, Vec<ChallengeRow>> = HashMap::new();
+
+    for row in rows.iter() {
+        scenarios.entry(&row.title).or_insert(Vec::new());
+        let value = scenarios.get_mut(&row.title.as_str()).unwrap();
+        value.push(ChallengeRow {
+            name: &row.name,
+            code: &row.code,
+            description: row.description.as_ref().map(|a| a.as_str()),
+        });
+    }
+
+    let mut content = MessageBuilder::new();
+    let width = scenarios.len() / 10;
+    for (i, (scenario, challenges)) in scenarios.iter().enumerate() {
+        content.push(format!("{:>width$}.) {}\n", i + 1, scenario, width = width));
+        for challenge in challenges.iter() {
+            content.push(format!(
+                "- (Code: **{}**) *{}* - {}\n",
+                challenge.code,
+                challenge.name,
+                challenge.description.unwrap_or_else(|| "")
+            ));
+        }
+    }
+
+    msg.channel_id.say(&ctx.http, content.build()).await?;
+
+    Ok(())
+}
+
+#[command]
+/// Load challenges for scenarios already registered for the event
+pub async fn cload(ctx: &Context, msg: &Message) -> CommandResult {
+    let data = ctx.data.read().await;
+    let pool = data
+        .get::<PostgresPool>()
+        .expect("Expected PostgresPool in TypeMap.");
+
+    // TODO change to event picker
+    let event = match Event::find_by_active(pool, true).await? {
+        Some(event) => event,
+        None => {
+            msg.channel_id
+                .say(&ctx.http, "No active event found.")
+                .await?;
+
+            return Ok(());
+        }
+    };
+
+    let rows_count = sqlx::query!(
+        r#"
+INSERT INTO challenges_events ( event_id, challenge_id )
+SELECT $1, challenges.id
+FROM events_scenarios, challenges
+WHERE events_scenarios.event_id = $1
+    AND challenges.scenario_id = events_scenarios.scenario_id
+    AND challenges.id NOT IN (
+        SELECT id
+        FROM challenges_events
+        WHERE event_id = $1
+    )
+"#,
+        event.id
+    )
+    .execute(pool)
+    .await?
+    .rows_affected();
+
+    msg.channel_id
+        .say(&ctx.http, format!("{} challenges added.", rows_count))
+        .await?;
+
+    Ok(())
+}
+
+#[command]
+#[min_args(1)]
 /// Complete Challenge
 pub async fn ccomplete(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
     let code = match args.single::<String>() {
