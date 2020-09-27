@@ -24,4 +24,6 @@ CREATE TABLE IF NOT EXISTS challenges_events_users
 	updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY(challenges_events_id) REFERENCES challenges_events(id),
 	FOREIGN KEY(user_id) REFERENCES users(id)
-)
+);
+
+CREATE UNIQUE INDEX ON challenges_events_users (challenges_events_id, user_id);

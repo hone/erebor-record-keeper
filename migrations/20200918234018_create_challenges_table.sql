@@ -22,3 +22,5 @@ CREATE TABLE IF NOT EXISTS challenges_events
 	FOREIGN KEY(event_id) REFERENCES events(id),
 	FOREIGN KEY(challenge_id) REFERENCES challenges(id)
 );
+
+CREATE UNIQUE INDEX ON challenges_events (event_id, challenge_id);
