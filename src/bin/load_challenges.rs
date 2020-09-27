@@ -30,7 +30,7 @@ async fn main() -> anyhow::Result<()> {
     let doc: Challenges = toml::from_str(&contents).unwrap();
 
     for (i, challenge) in doc.challenge.iter().enumerate() {
-        let code = format!("{}{:0>2}", doc.code_prefix, i);
+        let code = format!("{}{:0>2}", doc.code_prefix, i + 1);
         let scenario = match Scenario::find_by_title(&pool, &challenge.scenario).await? {
             Some(scenario) => scenario,
             None => {
