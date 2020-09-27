@@ -328,19 +328,6 @@ pub async fn equest(ctx: &Context, msg: &Message, mut args: Args) -> CommandResu
         .expect("Expected PostgresPool in TypeMap.");
 
     if let Some(event) = Event::find_by_active(pool, true).await? {
-        let times = sqlx::query!(r#"
-SELECT cast(extract(epoch from current_timestamp) AS integer) AS current, cast(extract(epoch from CURRENT_TIMESTAMP - INTERVAL '1 minutes') AS integer) AS interval, cast(extract(epoch from events_scenarios.checkout) AS integer) AS checkout
-FROM events_scenarios
-WHERE events_scenarios.event_id = $1
-"#, event.id).fetch_all(pool).await?;
-        for time in times.iter() {
-            println!(
-                "{} | {} | {}",
-                time.current.unwrap_or(0),
-                time.interval.unwrap_or(0),
-                time.checkout.unwrap_or(0)
-            );
-        }
         let scenarios = sqlx::query!(
             r#"
 SELECT scenarios.title, sets.name AS set_name, scenarios.code
