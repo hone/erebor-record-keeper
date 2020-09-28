@@ -836,3 +836,66 @@ VALUES ( $1, $2 )
 
     Ok(())
 }
+
+#[command]
+pub async fn cprogress(ctx: &Context, msg: &Message) -> CommandResult {
+    let data = ctx.data.read().await;
+    let pool = data
+        .get::<PostgresPool>()
+        .expect("Expected PostgresPool in TypeMap.");
+
+    let event = match Event::find_by_active(pool, true).await? {
+        Some(event) => event,
+        None => {
+            msg.channel_id
+                .say(&ctx.http, "No active event found.")
+                .await?;
+
+            return Ok(());
+        }
+    };
+
+    let challenge_count = sqlx::query!(
+        r#"
+SELECT COUNT(*)
+FROM challenges_events
+WHERE challenges_events.event_id = $1
+"#,
+        event.id
+    )
+    .fetch_one(pool)
+    .await?
+    .count
+    .unwrap();
+
+    let completed_challenges = sqlx::query!(
+        r#"
+SELECT challenges.name, challenges.code, challenges.description, scenarios.title
+FROM challenges_events_users, challenges_events, users, challenges, scenarios
+WHERE challenges_events_users.challenges_events_id = challenges_events.id
+    AND challenges_events.event_id = $1
+    AND challenges_events_users.user_id = users.id
+    AND users.discord_id = $2
+    AND challenges_events.challenge_id = challenges.id
+    AND challenges.scenario_id = scenarios.id
+"#,
+        event.id,
+        *msg.author.id.as_u64() as i64
+    )
+    .fetch_all(pool)
+    .await?;
+
+    msg.channel_id
+        .say(
+            &ctx.http,
+            format!(
+                "You've completed {} of {} total challenges: {:.2}%",
+                completed_challenges.len(),
+                challenge_count,
+                (completed_challenges.len() as f32 / challenge_count as f32) * 100.0
+            ),
+        )
+        .await?;
+
+    Ok(())
+}

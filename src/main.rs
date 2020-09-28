@@ -27,7 +27,8 @@ struct General;
 #[group]
 #[prefix = "event"]
 #[commands(
-    add, archive, checkout, ccomplete, complete, create, equest, progress, set
+    add, archive, ccomplete, checkout, cload, complete, cprogress, cquest, create, equest,
+    progress, set
 )]
 struct Event;
 
