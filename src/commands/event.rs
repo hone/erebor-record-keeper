@@ -809,7 +809,7 @@ WHERE challenges.code = $1
 
     let mut reply = MessageBuilder::new();
     let mut users: Vec<&serenity::model::user::User> = msg.mentions.iter().map(|u| u).collect();
-    users.push(&msg.author);
+    users.insert(0, &msg.author);
 
     for discord_user in users {
         let user = User::find_or_create(pool, discord_user.id.as_u64(), &discord_user.name).await?;
@@ -824,6 +824,7 @@ VALUES ( $1, $2 )
         .execute(pool)
         .await?;
         reply.mention(discord_user);
+        reply.push(" ");
     }
 
     reply.push(format!(
