@@ -704,16 +704,26 @@ pub async fn cload(ctx: &Context, msg: &Message) -> CommandResult {
         .get::<PostgresPool>()
         .expect("Expected PostgresPool in TypeMap.");
 
-    // TODO change to event picker
-    let event = match Event::find_by_active(pool, true).await? {
-        Some(event) => event,
-        None => {
-            msg.channel_id
-                .say(&ctx.http, "No active event found.")
-                .await?;
+    let events = Event::find_by_archive(pool, false).await?;
+    if events.is_empty() {
+        msg.channel_id
+            .say(
+                &ctx.http,
+                "There are no unarchived events. Please create one.",
+            )
+            .await?;
 
-            return Ok(());
-        }
+        return Ok(());
+    }
+    msg.channel_id
+        .say(
+            &ctx.http,
+            utils::format_collection(&events.iter().map(|event| &event.name).collect()),
+        )
+        .await?;
+    let event = match utils::pick_collection(ctx, msg, &events).await? {
+        Some(event) => event,
+        None => return Ok(()),
     };
 
     let rows_count = sqlx::query!(
@@ -723,11 +733,7 @@ SELECT $1, challenges.id
 FROM events_scenarios, challenges
 WHERE events_scenarios.event_id = $1
     AND challenges.scenario_id = events_scenarios.scenario_id
-    AND challenges.id NOT IN (
-        SELECT id
-        FROM challenges_events
-        WHERE event_id = $1
-    )
+ON CONFLICT DO NOTHING
 "#,
         event.id
     )
