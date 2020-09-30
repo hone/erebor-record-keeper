@@ -31,7 +31,9 @@ struct General;
 #[group]
 #[prefix = "event"]
 #[sub_groups("EventAdmin")]
-#[commands(ccomplete, checkout, complete, cprogress, cquest, equest, progress)]
+#[commands(
+    ccomplete, checkout, complete, cprogress, cquest, equest, gauntlet, progress
+)]
 struct Event;
 
 #[group]

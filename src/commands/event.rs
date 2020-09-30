@@ -87,16 +87,16 @@ pub async fn complete(ctx: &Context, msg: &Message, mut args: Args) -> CommandRe
             .get::<PostgresPool>()
             .expect("Expected PostgresPool in TypeMap.");
 
-        let event;
-        if let Some(e) = Event::find_by_active(pool, true).await? {
-            event = e;
-        } else {
-            msg.channel_id
-                .say(&ctx.http, "No active event found.")
-                .await?;
+        let event = match Event::find_by_active(pool, true).await? {
+            Some(event) => event,
+            None => {
+                msg.channel_id
+                    .say(&ctx.http, "No active event found.")
+                    .await?;
 
-            return Ok(());
-        }
+                return Ok(());
+            }
+        };
 
         let scenario;
         if let Ok(s) = sqlx::query!(
@@ -308,6 +308,7 @@ WITH completed_challenges AS (
             AND challenges_events_users.challenges_events_id = challenges_events.id
             AND challenges_events.event_id = $1
             AND challenges_events.challenge_id = challenges.id
+            AND 'Gauntlet' <> ALL (challenges.attributes)
 ),
 completed_challenges_by_scenarios AS (
         SELECT scenario_id AS id, COUNT(id) AS count
@@ -318,14 +319,15 @@ challenge_count AS (
         SELECT challenges.scenario_id AS id, COUNT(challenges.id) AS count
         FROM challenges_events, challenges
         WHERE challenges_events.event_id = $1
-                AND challenges_events.challenge_id = challenges.id
+            AND challenges_events.challenge_id = challenges.id
+            AND 'Gauntlet' <> ALL (challenges.attributes)
         GROUP BY challenges.scenario_id
 ),
 completed_scenarios AS (
     SELECT completed_challenges_by_scenarios.id
     FROM completed_challenges_by_scenarios, challenge_count
     WHERE challenge_count.id = completed_challenges_by_scenarios.id
-            AND challenge_count.count = completed_challenges_by_scenarios.count
+        AND challenge_count.count = completed_challenges_by_scenarios.count
 ),
 chosen_scenarios AS (
     SELECT scenarios.id, scenarios.title
@@ -345,6 +347,7 @@ FROM chosen_scenarios, challenges_events, challenges
 WHERE challenges_events.event_id = $1
     AND challenges_events.challenge_id = challenges.id
     AND challenges.scenario_id = chosen_scenarios.id
+    AND 'Gauntlet' <> ALL (challenges.attributes)
     AND challenges.id NOT IN (
         SELECT id
         FROM completed_challenges
@@ -535,8 +538,10 @@ pub async fn cprogress(ctx: &Context, msg: &Message) -> CommandResult {
     let challenge_count = sqlx::query!(
         r#"
 SELECT COUNT(*)
-FROM challenges_events
+FROM challenges_events, challenges
 WHERE challenges_events.event_id = $1
+    AND challenges_events.challenge_id = challenges.id
+    AND 'Gauntlet' <> ALL (challenges.attributes)
 "#,
         event.id
     )
@@ -555,6 +560,7 @@ WHERE challenges_events_users.challenges_events_id = challenges_events.id
     AND users.discord_id = $2
     AND challenges_events.challenge_id = challenges.id
     AND challenges.scenario_id = scenarios.id
+    AND 'Gauntlet' <> ALL (challenges.attributes)
 "#,
         event.id,
         *msg.author.id.as_u64() as i64
@@ -572,6 +578,42 @@ WHERE challenges_events_users.challenges_events_id = challenges_events.id
         ),
     )
     .await?;
+
+    Ok(())
+}
+
+#[command]
+/// Return a random challenge from the gauntlet
+pub async fn gauntlet(ctx: &Context, msg: &Message) -> CommandResult {
+    let data = ctx.data.read().await;
+    let pool = data
+        .get::<PostgresPool>()
+        .expect("Expected PostgresPool in TypeMap.");
+
+    let result = sqlx::query!(
+        r#"
+SELECT name, description
+FROM challenges
+WHERE 'Gauntlet' = ANY (attributes)
+ORDER BY RANDOM()
+LIMIT 1
+"#
+    )
+    .fetch_all(pool)
+    .await?
+    .pop();
+
+    let message = if let Some(challenge) = result {
+        format!(
+            "You've selected the following challenge:\n*{}* - {}",
+            challenge.name,
+            challenge.description.unwrap_or("".to_string())
+        )
+    } else {
+        "Could not find any gauntlet challenges.".to_string()
+    };
+
+    msg.reply(&ctx.http, message).await?;
 
     Ok(())
 }

@@ -1,0 +1,56 @@
+code_prefix = "TPWG20"
+
+[[challenge]]
+name = "Toughness"
+description = "Enemies cannot take damage the round they are engaged."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "Hit Me Baby One More Time"
+description = "Each attack is dealt an extra shadow card."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "A red sun rises. Blood has been spilled this night."
+description = "Place the Day/Night card from The Wastes of Eriador in the staging area, Day side faceup."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "You SHALL NOT Cancel!!"
+description = "When revealed effects cannot be cancelled."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "The Wealth of Gondor"
+description = "The first card each player plays each round costs one extra resource."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "Heroic 1"
+description = "The first player reveals an additional card from the encounter deck each quest phase."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "Race Against the Clock"
+description = "Threat goes up by an additional two each round."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "Some Who Wander ARE Lost"
+description = "During the travel phase, unless they travel to a location required by the quest to progress, players choose a new location to travel to at random. If they cannot fulfill the travel cost, another location must be chosen."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "Quickstrike"
+description = "Each time an enemy is optionally engaged, it makes an immediate attack. Do not deal a shadow card for this attack."
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "Don't Be Hasty"
+description = "When an ally enters play, players must either exhaust it or deal one damage to it"
+attributes = ["The Purple Wizard", "Gauntlet"]
+
+[[challenge]]
+name = "The Curse of the Undead"
+description = "At the end of the round, each player discards the top card of their deck. If one or more copies of the discarded card are in play under their control, discard one copy from play."
+attributes = ["The Purple Wizard", "Gauntlet"]

@@ -12,7 +12,9 @@ struct Challenges {
 struct Challenge {
     name: String,
     description: String,
-    scenario: String,
+    scenario: Option<String>,
+    #[serde(default)]
+    attributes: Vec<String>,
 }
 
 #[tokio::main]
@@ -31,25 +33,30 @@ async fn main() -> anyhow::Result<()> {
 
     for (i, challenge) in doc.challenge.iter().enumerate() {
         let code = format!("{}{:0>2}", doc.code_prefix, i + 1);
-        let scenario = match Scenario::find_by_title(&pool, &challenge.scenario).await? {
-            Some(scenario) => scenario,
-            None => {
-                println!(
-                    "Could not find Scenario '{}' from Challenge '{}'",
-                    challenge.scenario, challenge.name
-                );
-                std::process::exit(-1);
+        let scenario_id = if let Some(scenario) = &challenge.scenario {
+            match Scenario::find_by_title(&pool, &scenario).await? {
+                Some(scenario) => Some(scenario.id),
+                None => {
+                    println!(
+                        "Could not find Scenario '{}' from Challenge '{}'",
+                        scenario, challenge.name
+                    );
+                    std::process::exit(-1);
+                }
             }
+        } else {
+            None
         };
         sqlx::query!(
             r#"
-INSERT INTO challenges ( name, description, code, scenario_id )
-VALUES ( $1, $2, $3, $4 )
+INSERT INTO challenges ( name, description, code, scenario_id, attributes )
+VALUES ( $1, $2, $3, $4, $5 )
 "#,
-            challenge.name,
-            challenge.description,
+            &challenge.name,
+            &challenge.description,
             code,
-            scenario.id
+            scenario_id,
+            &challenge.attributes
         )
         .execute(&pool)
         .await?;
