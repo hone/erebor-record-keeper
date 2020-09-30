@@ -2,7 +2,10 @@ mod commands;
 mod models;
 mod utils;
 
-use commands::{event::*, quest::*};
+use commands::{
+    event::{admin::*, *},
+    quest::*,
+};
 use serenity::{
     async_trait,
     client::Client,
@@ -27,11 +30,15 @@ struct General;
 
 #[group]
 #[prefix = "event"]
-#[commands(
-    add, archive, ccomplete, checkout, cload, complete, cprogress, cquest, create, equest,
-    progress, set
-)]
+#[sub_groups("EventAdmin")]
+#[commands(ccomplete, checkout, complete, cprogress, cquest, equest, progress)]
 struct Event;
+
+#[group]
+#[prefix = "admin"]
+#[allowed_roles("Tech Team")]
+#[commands(add, archive, cload, create, set)]
+struct EventAdmin;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
