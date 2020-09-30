@@ -814,29 +814,52 @@ WHERE challenges.code = $1
     };
 
     let mut reply = MessageBuilder::new();
-    let mut users: Vec<&serenity::model::user::User> = msg.mentions.iter().map(|u| u).collect();
-    users.insert(0, &msg.author);
+    let mut mentioned_users: Vec<&serenity::model::user::User> =
+        msg.mentions.iter().map(|u| u).collect();
+    mentioned_users.insert(0, &msg.author);
+    let mut completed_users: Vec<Option<&serenity::model::user::User>> = Vec::new();
 
-    for discord_user in users {
+    for discord_user in mentioned_users {
         let user = User::find_or_create(pool, discord_user.id.as_u64(), &discord_user.name).await?;
-        sqlx::query!(
+        let row_count = sqlx::query!(
             r#"
 INSERT INTO challenges_events_users ( challenges_events_id, user_id )
 VALUES ( $1, $2 )
+ON CONFLICT DO NOTHING
 "#,
             challenge_event.id,
             user.id
         )
         .execute(pool)
-        .await?;
-        reply.mention(discord_user);
-        reply.push(" ");
+        .await?
+        .rows_affected();
+
+        completed_users.push(if row_count > 0 {
+            Some(discord_user)
+        } else {
+            None
+        });
     }
 
-    reply.push(format!(
-        "You've all completed challenge '{}'",
-        challenge_event.name
-    ));
+    let completed_users: Vec<_> = completed_users
+        .into_iter()
+        .filter_map(|user| user)
+        .collect();
+    if completed_users.is_empty() {
+        reply.push(format!(
+            "All users have already completed challenge '{}'",
+            challenge_event.name
+        ));
+    } else {
+        for discord_user in completed_users.iter() {
+            reply.mention(*discord_user);
+            reply.push(" ");
+        }
+        reply.push(format!(
+            "You completed challenge '{}'",
+            challenge_event.name
+        ));
+    }
 
     utils::check_msg(msg.channel_id.say(&ctx.http, &reply.build()).await);
 
