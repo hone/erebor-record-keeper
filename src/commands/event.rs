@@ -891,17 +891,16 @@ WHERE challenges_events_users.challenges_events_id = challenges_events.id
     .fetch_all(pool)
     .await?;
 
-    msg.channel_id
-        .say(
-            &ctx.http,
-            format!(
-                "You've completed {} of {} total challenges: {:.2}%",
-                completed_challenges.len(),
-                challenge_count,
-                (completed_challenges.len() as f32 / challenge_count as f32) * 100.0
-            ),
-        )
-        .await?;
+    msg.reply(
+        &ctx.http,
+        format!(
+            "You've completed {} of {} total challenges: {:.2}%",
+            completed_challenges.len(),
+            challenge_count,
+            (completed_challenges.len() as f32 / challenge_count as f32) * 100.0
+        ),
+    )
+    .await?;
 
     Ok(())
 }
