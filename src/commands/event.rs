@@ -470,7 +470,7 @@ WHERE challenges.code = $1
     mentioned_users.insert(0, &msg.author);
     let mut completed_users: Vec<Option<&serenity::model::user::User>> = Vec::new();
 
-    for discord_user in mentioned_users {
+    for discord_user in mentioned_users.iter() {
         let user = User::find_or_create(pool, discord_user.id.as_u64(), &discord_user.name).await?;
         let row_count = sqlx::query!(
             r#"
@@ -497,6 +497,10 @@ ON CONFLICT DO NOTHING
         .filter_map(|user| user)
         .collect();
     if completed_users.is_empty() {
+        for discord_user in mentioned_users.iter() {
+            reply.mention(*discord_user);
+            reply.push(" ");
+        }
         reply.push(format!(
             "All users have already completed challenge '{}'",
             challenge_event.name
