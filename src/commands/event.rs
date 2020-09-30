@@ -594,14 +594,28 @@ pub async fn gauntlet(ctx: &Context, msg: &Message) -> CommandResult {
         .get::<PostgresPool>()
         .expect("Expected PostgresPool in TypeMap.");
 
+    let event = match Event::find_by_active(pool, true).await? {
+        Some(event) => event,
+        None => {
+            msg.channel_id
+                .say(&ctx.http, "No active event set.")
+                .await?;
+
+            return Ok(());
+        }
+    };
+
     let result = sqlx::query!(
         r#"
 SELECT name, description
-FROM challenges
-WHERE 'Gauntlet' = ANY (attributes)
+FROM challenges, challenges_events
+WHERE challenges_events.event_id = $1
+    AND challenges_events.challenge_id = challenges.id
+    AND 'Gauntlet' = ANY (attributes)
 ORDER BY RANDOM()
 LIMIT 1
-"#
+"#,
+        event.id
     )
     .fetch_all(pool)
     .await?
