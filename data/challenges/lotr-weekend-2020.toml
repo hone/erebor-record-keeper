@@ -1,0 +1,141 @@
+code_prefix = "LOTR2020"
+
+[[challenge]]
+name = "They Call that a Massing?"
+description = "Defeat every scout that began the game in play before the second round"
+scenario = "The Massing at Osgiliath"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "For Gondor!"
+description = "Theme challenge: Win with all Gondor characters"
+scenario = "The Massing at Osgiliath"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Cut off"
+description = "Win without putting any allies into play (Ranger objectives are exceptions)"
+scenario = "The Massing at Osgiliath"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Gondorian Discipline"
+description = "Win without triggering the Forced effect on Wolves from Mordor"
+scenario = "The Massing at Osgiliath"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "We Don't Need No Water..."
+description = "Win with 46+ damage on Lake-town"
+scenario = "The Battle of Lake-town"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "How the Mighty Have Fallen"
+description = "Reduce Smaug the Mighty's defense to zero"
+scenario = "The Battle of Lake-town"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Origin Story"
+description = "Defeat Smaug with Bard the Bowman"
+scenario = "The Battle of Lake-town"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Back in Time for Supper"
+description = "Win Before Midnight"
+scenario = "The Stone of Erech"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Masquerade"
+description = "Choose the 'pass your hand' option every time Groping Horror is revealed"
+scenario = "The Stone of Erech"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Do You Believe in Ghost Stories Now?"
+description = "Have 5+ Oathbreakers engaged with a single player, and live to tell the tale"
+scenario = "The Stone of Erech"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Late to the Party"
+description = "At the beginning of the game, put Dusk into play instead of Eventide"
+scenario = "The Stone of Erech"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Many Trespassers"
+description = "Win with 4 players"
+scenario = "The Old Forest"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Dense Undergrowth"
+description = "Each stage 2A's When Revealed now reads: 'If the number of locations in the staging area is less than *twice* the number of players in the game, search the encounter deck and discard pile for a location and add it to the staging area. Shuffle the encounter deck.'"
+scenario = "The Old Forest"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "We're Not Leaving Him This Time"
+description = "Alternate History: Use a Bonds of Friendship deck with Sam, Merry, Pippin, and Fatty"
+scenario = "Fog on the Barrow Downs"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Hey! Come merry dol!"
+description = "Play Tom Bombadilio! and get the Tom Bombadil player card into play during the scenario"
+scenario = "Fog on the Barrow Downs"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Fear Consumes All"
+description = "Treachery card When Revealed effects cannot be cancelled"
+scenario = "Fog on the Barrow Downs"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "It Belongs in a Museum!"
+description = "Collect at least five loot objectives"
+scenario = "The Ruins of Belegost"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Overzealous"
+description = "Defeat a Nameless Cave Dweller that has 5 in all stats"
+scenario = "The Ruins of Belegost"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Stonebreaker"
+description = "Defeat an Old Stone Troll in one attack"
+scenario = "The Ruins of Belegost"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Trapfinder"
+description = "Cancel (or add to the victory display) a copy of Concealed Spikes and Covered Pit"
+scenario = "The Ruins of Belegost"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "The Local Flavour"
+description = "Theme challenge: Win with only Hobbit and/or Dunedain characters"
+scenario = "Murder at the Prancing Pony"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Elementary, my Dear"
+description = "Correctly name the Suspect and Hideout"
+scenario = "Murder at the Prancing Pony"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+[[challenge]]
+name = "Roundup"
+description = "Defeat at least 3 suspects"
+scenario = "Murder at the Prancing Pony"
+attributes = ["Lord of the Rings Weekend 2020"]
+
+
