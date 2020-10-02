@@ -40,7 +40,7 @@ struct General;
 #[prefix = "event"]
 #[description = "Set of Commands for interacting with an event."]
 #[sub_groups("EventAdmin")]
-#[commands(ccomplete, cprogress, cquest, gauntlet)]
+#[commands(call, ccomplete, cprogress, cquest, gauntlet)]
 struct Event;
 
 #[group]

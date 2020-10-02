@@ -412,6 +412,84 @@ WHERE challenges_events.event_id = $1
 }
 
 #[command]
+#[aliases(all)]
+#[usage = ""]
+#[example = ""]
+/// List all available challenges
+pub async fn call(ctx: &Context, msg: &Message) -> CommandResult {
+    let data = ctx.data.read().await;
+    let pool = data
+        .get::<PostgresPool>()
+        .expect("Expected PostgresPool in TypeMap.");
+
+    let event = match Event::find_by_active(pool, true).await? {
+        Some(event) => event,
+        None => {
+            msg.channel_id
+                .say(&ctx.http, "No active event found.")
+                .await?;
+
+            return Ok(());
+        }
+    };
+
+    let rows = sqlx::query!(
+        r#"
+SELECT challenges.name, challenges.code, challenges.description, scenarios.title
+FROM events_scenarios, challenges_events, challenges, scenarios
+WHERE events_scenarios.event_id = $1
+    AND events_scenarios.scenario_id = scenarios.id
+    AND challenges_events.event_id = events_scenarios.event_id
+    AND challenges_events.challenge_id = challenges.id
+    AND challenges.scenario_id = scenarios.id
+    AND 'Gauntlet' <> ALL (challenges.attributes)
+"#,
+        event.id
+    )
+    .fetch_all(pool)
+    .await?;
+
+    if rows.is_empty() {
+        msg.channel_id
+            .say(&ctx.http, "No challenges found.")
+            .await?;
+
+        return Ok(());
+    }
+
+    let mut scenarios: HashMap<&str, Vec<ChallengeRow>> = HashMap::new();
+
+    for row in rows.iter() {
+        scenarios.entry(&row.title).or_insert(Vec::new());
+        let value = scenarios.get_mut(&row.title.as_str()).unwrap();
+        value.push(ChallengeRow {
+            name: &row.name,
+            code: &row.code,
+            description: row.description.as_ref().map(|a| a.as_str()),
+        });
+    }
+
+    let width = scenarios.len() / 10;
+    for (i, (scenario, challenges)) in scenarios.iter().enumerate() {
+        let mut content = MessageBuilder::new();
+
+        content.push(format!("{:>width$}.) {}\n", i + 1, scenario, width = width));
+        for challenge in challenges.iter() {
+            content.push(format!(
+                "- (Code: **{}**) *{}* - {}\n",
+                challenge.code,
+                challenge.name,
+                challenge.description.unwrap_or_else(|| "")
+            ));
+        }
+
+        msg.channel_id.say(&ctx.http, content.build()).await?;
+    }
+
+    Ok(())
+}
+
+#[command]
 #[min_args(1)]
 #[aliases("complete")]
 #[usage = "<challenge code>"]
