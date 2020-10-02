@@ -29,6 +29,10 @@ pub fn format_quests_display(scenarios: &Vec<Scenario>) -> String {
 }
 
 #[command]
+#[usage = "<quantity=default:3>"]
+#[example = ""]
+#[example = "5"]
+/// Return a list of random quests to tackle. The list quantity defaults to 3.
 pub async fn quest(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
     let quantity = args.single::<i64>().unwrap_or(DEFAULT_QUESTS_NUM);
     let data = ctx.data.read().await;

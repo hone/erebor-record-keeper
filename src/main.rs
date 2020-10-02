@@ -9,8 +9,16 @@ use commands::{
 use serenity::{
     async_trait,
     client::Client,
-    framework::standard::{macros::group, StandardFramework},
-    model::{gateway::Ready, id::ChannelId},
+    framework::standard::{
+        help_commands,
+        macros::{group, help},
+        Args, CommandGroup, CommandResult, HelpOptions, StandardFramework,
+    },
+    model::{
+        gateway::Ready,
+        id::ChannelId,
+        prelude::{Message, UserId},
+    },
     prelude::{Context, EventHandler},
 };
 use sqlx::postgres::PgPoolOptions;
@@ -30,6 +38,7 @@ struct General;
 
 #[group]
 #[prefix = "event"]
+#[description = "Set of Commands for interacting with an event."]
 #[sub_groups("EventAdmin")]
 #[commands(
     ccomplete, checkout, complete, cprogress, cquest, equest, gauntlet, progress
@@ -41,6 +50,22 @@ struct Event;
 #[allowed_roles("Tech Team")]
 #[commands(add, archive, cload, create, set)]
 struct EventAdmin;
+
+#[help]
+#[individual_command_tip = "If you want more information about a specific command, just pass the command as argument."]
+#[lacking_role("hide")]
+#[max_levenshtein_distance(3)]
+async fn my_help(
+    context: &Context,
+    msg: &Message,
+    args: Args,
+    help_options: &'static HelpOptions,
+    groups: &[&'static CommandGroup],
+    owners: HashSet<UserId>,
+) -> CommandResult {
+    let _ = help_commands::with_embeds(context, msg, args, help_options, groups, owners).await;
+    Ok(())
+}
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -64,6 +89,7 @@ async fn main() -> anyhow::Result<()> {
         .framework(
             StandardFramework::new()
                 .configure(|c| c.prefix("!").allowed_channels(channels))
+                .help(&MY_HELP)
                 .group(&EVENT_GROUP)
                 .group(&GENERAL_GROUP),
         )

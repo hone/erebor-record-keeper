@@ -19,7 +19,10 @@ pub mod admin;
 #[min_args(0)]
 #[max_args(1)]
 #[aliases(quest)]
-/// Return a list of quests associated with the event
+#[usage = "<quantity=default:3>"]
+#[example = ""]
+#[example = "5"]
+/// Return a list of quests remaining for the event
 pub async fn equest(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
     let quantity = args.single::<i64>().unwrap_or(quest::DEFAULT_QUESTS_NUM);
     let data = ctx.data.read().await;
@@ -79,7 +82,9 @@ LIMIT $2
 
 #[command]
 #[num_args(1)]
-/// Complete a quest
+#[usage = "<scenario code>"]
+#[example = "0101"]
+/// Mark a scenario as complete
 pub async fn complete(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
     if let Ok(code) = args.single::<String>() {
         let data = ctx.data.read().await;
@@ -150,7 +155,9 @@ WHERE event_id = $1
 
 #[command]
 #[num_args(1)]
-/// Checkout a Quest
+#[usage = "<scenario code>"]
+#[example = "0101"]
+/// Claim a Quest for 2 hours. This will hide it from the equest command.
 pub async fn checkout(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
     if let Ok(code) = args.single::<String>() {
         let data = ctx.data.read().await;
@@ -230,7 +237,9 @@ WHERE event_id = $2
 }
 
 #[command]
-/// Display how much of the event quests are complete
+#[usage = ""]
+#[example = ""]
+/// Display progress for scenarios finished for the group
 pub async fn progress(ctx: &Context, msg: &Message) -> CommandResult {
     let data = ctx.data.read().await;
     let pool = data
@@ -279,7 +288,9 @@ struct ChallengeRow<'a> {
 }
 
 #[command]
-/// Return a list of challenges
+#[usage = ""]
+#[example = ""]
+/// List uncompleted challenges
 pub async fn cquest(ctx: &Context, msg: &Message) -> CommandResult {
     let quest_count = 3;
     let data = ctx.data.read().await;
@@ -401,7 +412,9 @@ WHERE challenges_events.event_id = $1
 
 #[command]
 #[min_args(1)]
-/// Complete Challenge
+#[usage = "<challenge code>"]
+#[example = "CON1901"]
+/// Mark a challenge as complete
 pub async fn ccomplete(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
     let code = match args.single::<String>() {
         Ok(code) => code,
@@ -522,6 +535,9 @@ ON CONFLICT DO NOTHING
 }
 
 #[command]
+#[usage = ""]
+#[example = ""]
+/// Display your challenge progress
 pub async fn cprogress(ctx: &Context, msg: &Message) -> CommandResult {
     let data = ctx.data.read().await;
     let pool = data
@@ -587,7 +603,9 @@ WHERE challenges_events_users.challenges_events_id = challenges_events.id
 }
 
 #[command]
-/// Return a random challenge from the gauntlet
+#[usage = ""]
+#[example = ""]
+/// Display a random challenge from the gauntlet
 pub async fn gauntlet(ctx: &Context, msg: &Message) -> CommandResult {
     let data = ctx.data.read().await;
     let pool = data
