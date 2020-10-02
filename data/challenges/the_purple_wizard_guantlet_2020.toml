@@ -1,7 +1,7 @@
 code_prefix = "TPWG20"
 
 [[challenge]]
-name = "Toughness"
+name = "U Can't Touch This."
 description = "Enemies cannot take damage the round they are engaged."
 attributes = ["The Purple Wizard", "Gauntlet"]
 
@@ -16,17 +16,17 @@ description = "Place the Day/Night card from The Wastes of Eriador in the stagin
 attributes = ["The Purple Wizard", "Gauntlet"]
 
 [[challenge]]
-name = "You SHALL NOT Cancel!!"
+name = "YOU SHALL NOT CANCEL!!!"
 description = "When revealed effects cannot be cancelled."
 attributes = ["The Purple Wizard", "Gauntlet"]
 
 [[challenge]]
-name = "The Wealth of Gondor"
+name = "Taxation Without Representation"
 description = "The first card each player plays each round costs one extra resource."
 attributes = ["The Purple Wizard", "Gauntlet"]
 
 [[challenge]]
-name = "Heroic 1"
+name = "Is this it? Is this all you can conjure, Saruman?"
 description = "The first player reveals an additional card from the encounter deck each quest phase."
 attributes = ["The Purple Wizard", "Gauntlet"]
 
@@ -41,7 +41,7 @@ description = "During the travel phase, unless they travel to a location require
 attributes = ["The Purple Wizard", "Gauntlet"]
 
 [[challenge]]
-name = "Quickstrike"
+name = "The Fast and Optionally Furious"
 description = "Each time an enemy is optionally engaged, it makes an immediate attack. Do not deal a shadow card for this attack."
 attributes = ["The Purple Wizard", "Gauntlet"]
 
@@ -51,6 +51,6 @@ description = "When an ally enters play, players must either exhaust it or deal 
 attributes = ["The Purple Wizard", "Gauntlet"]
 
 [[challenge]]
-name = "The Curse of the Undead"
+name = "Never tell me the odds!"
 description = "At the end of the round, each player discards the top card of their deck. If one or more copies of the discarded card are in play under their control, discard one copy from play."
 attributes = ["The Purple Wizard", "Gauntlet"]
