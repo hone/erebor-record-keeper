@@ -288,6 +288,7 @@ struct ChallengeRow<'a> {
 }
 
 #[command]
+#[aliases("quest")]
 #[usage = ""]
 #[example = ""]
 /// List uncompleted challenges
@@ -412,6 +413,7 @@ WHERE challenges_events.event_id = $1
 
 #[command]
 #[min_args(1)]
+#[aliases("complete")]
 #[usage = "<challenge code>"]
 #[example = "CON1901"]
 /// Mark a challenge as complete
@@ -535,6 +537,7 @@ ON CONFLICT DO NOTHING
 }
 
 #[command]
+#[aliases("progress")]
 #[usage = ""]
 #[example = ""]
 /// Display your challenge progress
