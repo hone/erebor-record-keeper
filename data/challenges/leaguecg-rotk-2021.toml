@@ -1,0 +1,207 @@
+code_prefix = "ROTK2021"
+
+[[challenge]]
+name = "But What About Second Hill Troll?"
+description = "When revealing Stage 1B, add 2 Hill Trolls to the staging area."
+scenario = "Journey Down the Anduin"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Climactic Battle"
+description = "After revealing Stage 3B, search the encounter deck, encounter discard, and victory display for Chieftan Uftak, Marsh Adder, and two Hill Trolls, and add them all to the staging area."
+scenario = "Journey Down the Anduin"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "This River Is Longer Than I Remembered..."
+description = "Stage 2B has an additional 15 quest points per player."
+scenario = "Journey Down the Anduin"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Hop In, Big Guy"
+description = "After revealing Quest Stage 1B, immediately advance to Quest Stage 2A."
+scenario = "Journey Down the Anduin"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "No Pain, No Dain"
+description = "Theme challenge: Win with Dwarves-only, but without Dain Ironfoot."
+scenario = "The Seventh Level"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Crafty Goblins"
+description = "On Nightmare mode, all Goblins gain 'When revealed: Add a resource to this enemy.'"
+scenario = "The Seventh Level"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "They Have A Cave Troll"
+description = "After flipping to Stage 1B or 2B, search the encounter deck, encounter discard, and victory display for a Cave Troll and add it to the staging area."
+scenario = "The Seventh Level"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "What Part Of 'Army' Didn't You Understand?"
+description = "Southron Support cannot be cancelled."
+scenario = "Into Ithilien"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Yeah, I'm Kind Of A Big Deal"
+description = "After setup, add the Mumak to the staging area. Mumak gains 'Immune to player card effects.'"
+scenario = "Into Ithilien"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Lead Recruiter"
+description = "Win the game with all three Ranger objectives in play."
+scenario = "Into Ithilien"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Race Across Ithilien"
+description = "Win the game by bypassing Quest stage 2, and before Quest Stage 4B gains Siege."
+scenario = "Into Ithilien"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Second-Wind"
+description = "After Mugash enters play, search the victory display, and all out-of-play decks, for all copies of Mugash's Guards and add them to the staging area."
+scenario = "To Catch an Orc"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Formidable Guard"
+description = "[Requires proxies] Each player puts an additional copy of Mugash's Guard into their out-of-play deck."
+scenario = "To Catch an Orc"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Unruly Captive"
+description = "Each player must exhaust a hero to capture Mugash. Mugash is considered to be attached to each hero exhausted this way."
+scenario = "To Catch an Orc"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "No Time To Spare"
+description = "Stage 2B starts with only 1 Time counter in play."
+scenario = "To Catch an Orc"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "That's What Minions Are For"
+description = "[Requires proxies] During setup, place Mugash out of play. Each player adds a copy of Mugash's Guard to their out-of-play deck. When X guards have been defeated (X is the number of players in the game), put Mugash into play engaged with the first player."
+scenario = "To Catch an Orc"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Are You Lost, Big Boy?"
+description = "After setup, add a Hill Troll (from the Core Set) to the staging area."
+scenario = "The Weather Hills"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Out In The Wilds"
+description = "After setup, add Search the Ruins, Make Camp, and Find Shelter to the staging area."
+scenario = "The Weather Hills"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Zeus Won't Be Stopped"
+description = "Weather treacheries cannot be cancelled."
+scenario = "The Weather Hills"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Oh, Look Who's Packing Weather Cloak Now"
+description = "Add the Foul Weather encounter set (from The Lost Realm) to the encounter deck."
+scenario = "The Fate of Numenor"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Unwelcoming Isle"
+description = "Each Lost Island gains an additional 2 threat."
+scenario = "The Fate of Numenor"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Army of Darkness"
+description = "Each Undead enemy has 10 hit points."
+scenario = "The Fate of Numenor"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Beat The Heat"
+description = "Win with 30 heat or less."
+scenario = "Desert Crossing"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Inhospitable Desert"
+description = "After setup, add Seek Shade, Find Water, and Craft Remedy to the staging area."
+scenario = "Desert Crossing"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Mirage"
+description = "After each time you travel to a location, switch that location with the top-most location in the encounter discard pile."
+scenario = "Desert Crossing"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Mid-Summer Mistake"
+description = "Raise the temperature by 6 each round, instead of 4."
+scenario = "Desert Crossing"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Denizens Of Mirkwood"
+description = "Theme challenge: Win with Silvans and Woodmen-only."
+scenario = "Lost in Mirkwood"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Unwelcome Companion"
+description = "Replace Haldan with Nalir (from Trouble in Tharbad or Nin-in-Eilph)."
+scenario = "Lost in Mirkwood"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Swarm of Guano"
+description = "Each player must lose 10 or more resources throughout the game to Swarm of Bats."
+scenario = "Lost in Mirkwood"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "A Conspiracy Unmasked"
+description = "At Quest Stage 2A, reveal 2 plots instead of 1."
+scenario = "Danger in Dorwinion"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Council Of The Eyes"
+description = "During Quest Stage 3A, reveal all three Cultists."
+scenario = "Danger in Dorwinion"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Fallen Order"
+description = "[WARNING: Extremely difficult] Have two Istari in play as secret cultists at the same time."
+scenario = "Danger in Dorwinion"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Unlikely Friendship"
+description = "Have a Dwarf and a Silvan in play as secret cultists at the same time."
+scenario = "Danger in Dorwinion"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+[[challenge]]
+name = "Totally Lost In The City"
+description = "During the Travel phase, players must travel to a random location."
+scenario = "Danger in Dorwinion"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
+
+
