@@ -13,8 +13,12 @@ struct Challenge {
     name: String,
     description: String,
     scenario: Option<String>,
+    #[serde(skip)]
+    scenario_id: Option<i64>,
     #[serde(default)]
     attributes: Vec<String>,
+    #[serde(skip)]
+    code: String,
 }
 
 #[tokio::main]
@@ -29,9 +33,9 @@ async fn main() -> anyhow::Result<()> {
         .connect(&std::env::var("DATABASE_URL")?)
         .await?;
 
-    let doc: Challenges = toml::from_str(&contents).unwrap();
+    let mut doc: Challenges = toml::from_str(&contents).unwrap();
 
-    for (i, challenge) in doc.challenge.iter().enumerate() {
+    for (i, mut challenge) in doc.challenge.iter_mut().enumerate() {
         let code = format!("{}{:0>2}", doc.code_prefix, i + 1);
         let scenario_id = if let Some(scenario) = &challenge.scenario {
             match Scenario::find_by_title(&pool, &scenario).await? {
@@ -47,6 +51,12 @@ async fn main() -> anyhow::Result<()> {
         } else {
             None
         };
+
+        challenge.code = code;
+        challenge.scenario_id = scenario_id;
+    }
+
+    for challenge in doc.challenge {
         sqlx::query!(
             r#"
 INSERT INTO challenges ( name, description, code, scenario_id, attributes )
@@ -54,8 +64,8 @@ VALUES ( $1, $2, $3, $4, $5 )
 "#,
             &challenge.name,
             &challenge.description,
-            code,
-            scenario_id,
+            &challenge.code,
+            challenge.scenario_id,
             &challenge.attributes
         )
         .execute(&pool)
