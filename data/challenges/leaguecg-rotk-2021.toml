@@ -3,25 +3,25 @@ code_prefix = "ROTK2021"
 [[challenge]]
 name = "But What About Second Hill Troll?"
 description = "When revealing Stage 1B, add 2 Hill Trolls to the staging area."
-scenario = "Journey Down the Anduin"
+scenario = "Journey Along the Anduin"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
 [[challenge]]
 name = "Climactic Battle"
 description = "After revealing Stage 3B, search the encounter deck, encounter discard, and victory display for Chieftan Uftak, Marsh Adder, and two Hill Trolls, and add them all to the staging area."
-scenario = "Journey Down the Anduin"
+scenario = "Journey Along the Anduin"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
 [[challenge]]
 name = "This River Is Longer Than I Remembered..."
 description = "Stage 2B has an additional 15 quest points per player."
-scenario = "Journey Down the Anduin"
+scenario = "Journey Along the Anduin"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
 [[challenge]]
 name = "Hop In, Big Guy"
 description = "After revealing Quest Stage 1B, immediately advance to Quest Stage 2A."
-scenario = "Journey Down the Anduin"
+scenario = "Journey Along the Anduin"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
 [[challenge]]
@@ -117,19 +117,19 @@ attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 [[challenge]]
 name = "Oh, Look Who's Packing Weather Cloak Now"
 description = "Add the Foul Weather encounter set (from The Lost Realm) to the encounter deck."
-scenario = "The Fate of Numenor"
+scenario = "The Fate of Númenor"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
 [[challenge]]
 name = "Unwelcoming Isle"
 description = "Each Lost Island gains an additional 2 threat."
-scenario = "The Fate of Numenor"
+scenario = "The Fate of Númenor"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
 [[challenge]]
 name = "Army of Darkness"
 description = "Each Undead enemy has 10 hit points."
-scenario = "The Fate of Numenor"
+scenario = "The Fate of Númenor"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
 [[challenge]]
