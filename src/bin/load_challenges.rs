@@ -57,6 +57,7 @@ async fn main() -> anyhow::Result<()> {
     }
 
     for challenge in doc.challenge {
+        println!("Adding Challenge: {}", &challenge.name);
         sqlx::query!(
             r#"
 INSERT INTO challenges ( name, description, code, scenario_id, attributes )

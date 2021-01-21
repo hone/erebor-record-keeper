@@ -22,7 +22,7 @@ async fn main() -> anyhow::Result<()> {
         .await?;
     let base_attributes: Vec<String> = vec![
         "Marvel Champions",
-        "Councli of 100 Kangs",
+        "Council of 100 Kangs",
         "LeacgueCG Con 2021: The Return of the Kang",
     ]
     .into_iter()
