@@ -89,7 +89,7 @@ async fn main() -> anyhow::Result<()> {
         .connect(&database_url)
         .await?;
 
-    let mut client = Client::new(discord_token)
+    let mut client = Client::builder(discord_token)
         .event_handler(Handler)
         .framework(
             StandardFramework::new()
