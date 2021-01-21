@@ -3,7 +3,7 @@ mod models;
 mod utils;
 
 use commands::{
-    event::{admin::*, *},
+    event::{admin::*, kang::*, *},
     quest::*,
 };
 use serenity::{
@@ -39,8 +39,8 @@ struct General;
 #[group]
 #[prefix = "event"]
 #[description = "Set of Commands for interacting with an event."]
-#[sub_groups("EventAdmin")]
-#[commands(call, ccomplete, cprogress, cquest, gauntlet)]
+#[sub_groups("EventAdmin", "EventKang")]
+#[commands(call, ccomplete, cprogress, cquest)]
 struct Event;
 
 #[group]
@@ -48,6 +48,12 @@ struct Event;
 #[allowed_roles("Tech Team")]
 #[commands(add, archive, cload, create, set)]
 struct EventAdmin;
+
+#[group]
+#[prefix = "kang"]
+#[description = "Set of Commands for the Return of the Kang Challenge!"]
+#[commands(conquer, kall, kprogress, mission)]
+struct EventKang;
 
 #[help]
 #[individual_command_tip = "If you want more information about a specific command, just pass the command as argument."]

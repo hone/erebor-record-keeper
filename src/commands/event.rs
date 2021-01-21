@@ -14,6 +14,7 @@ use sqlx::prelude::Done;
 use std::collections::HashMap;
 
 pub mod admin;
+pub mod kang;
 
 #[command]
 #[min_args(0)]

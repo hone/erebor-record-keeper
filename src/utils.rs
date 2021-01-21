@@ -20,6 +20,28 @@ pub fn format_collection<T: std::fmt::Display>(collection: &Vec<T>) -> String {
         .join("\n")
 }
 
+/// Format collection into a buckets of 1-indexed joint String. Discord has a 2000 character limit.
+pub fn format_large_collection<T: std::fmt::Display>(collection: &Vec<T>) -> Vec<String> {
+    let width = collection.len() / 10;
+    let mut partitioned: Vec<String> = Vec::new();
+    let mut strings: Vec<String> = collection
+        .iter()
+        .enumerate()
+        .map(|(i, item)| format!("{:>width$}.) {}", i + 1, item, width = width))
+        .collect::<Vec<String>>();
+
+    while !strings.is_empty() {
+        let range = if strings.len() >= 20 {
+            0..20
+        } else {
+            0..strings.len()
+        };
+        partitioned.push(strings.drain(range).collect::<Vec<String>>().join("\n"));
+    }
+
+    partitioned
+}
+
 /// Ask to pick from a collection and return the id of the set
 pub async fn pick_collection<'a, T>(
     ctx: &Context,
