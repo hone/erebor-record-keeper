@@ -52,5 +52,5 @@ attributes = ["The Purple Wizard", "Gauntlet"]
 
 [[challenge]]
 name = "Never tell me the odds!"
-description = "At the end of the round, each player discards the top card of their deck. If one or more copies of the discarded card are in play under their control, discard one copy from play."
+description = "At the end of the round, each player discards the top card of their deck. Then each player discards a copy of their discarded card from play or their hand, if possible."
 attributes = ["The Purple Wizard", "Gauntlet"]

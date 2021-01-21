@@ -3,6 +3,7 @@ mod models;
 mod utils;
 
 use commands::{
+    challenge::*,
     event::{admin::*, kang::*, *},
     quest::*,
 };
@@ -33,7 +34,7 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(quest)]
+#[commands(challenge, quest)]
 struct General;
 
 #[group]
