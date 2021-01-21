@@ -82,7 +82,7 @@ LIMIT $2
 }
 
 #[command]
-#[num_args(1)]
+#[min_args(1)]
 #[usage = "<scenario code>"]
 #[example = "0101"]
 /// Mark a scenario as complete
