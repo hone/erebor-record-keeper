@@ -204,4 +204,8 @@ description = "During the Travel phase, players must travel to a random location
 scenario = "Danger in Dorwinion"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
-
+[[challenge]]
+name = "Bring Home the Beacon"
+description = "Beat the quest with more than half the hit points on Erelas Beacon remaining."
+scenario = "The Battle for the Beacon"
+attributes = ["LeacgueCG Con 2021: The Return of the Kang"]

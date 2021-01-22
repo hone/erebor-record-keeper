@@ -1,0 +1,13 @@
+name = "The Children of Eorl"
+
+[[scenarios]]
+title = "Ambush at Erelas"
+number = 1
+
+[[scenarios]]
+title = "The Battle for the Beacon"
+number = 2
+
+[[scenarios]]
+title = "The Horse-Lord’s Ire"
+number = 3
