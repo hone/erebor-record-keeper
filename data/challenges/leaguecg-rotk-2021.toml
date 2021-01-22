@@ -127,7 +127,7 @@ scenario = "The Fate of Númenor"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
 
 [[challenge]]
-name = "Army of the Dark"
+name = "Army of Darkness"
 description = "Each Undead enemy has 10 hit points."
 scenario = "The Fate of Númenor"
 attributes = ["LeacgueCG Con 2021: The Return of the Kang"]
