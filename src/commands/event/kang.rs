@@ -10,7 +10,6 @@ use serenity::{
     prelude::Context,
     utils::MessageBuilder,
 };
-use sqlx::prelude::Done;
 
 const KANG_DEFAULT_MODE: &str = "all";
 

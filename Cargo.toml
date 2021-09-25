@@ -10,12 +10,12 @@ edition = "2018"
 anyhow = "1.0"
 csv = "1.1"
 dotenv = "0.15"
-reqwest = { version = "0.10", features = ["json"] }
+reqwest = { version = "0.11", features = ["json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-serenity = { version = "0.9", features = ["collector", "framework", "standard_framework"] }
-sqlx = { version = "0.4.0", default_features = false, features = ["macros", "postgres", "runtime-tokio-rustls"] }
-tokio = { version = "0.2", features = ["macros"] }
+serenity = { version = "0.10", features = ["collector", "framework", "standard_framework"] }
+sqlx = { version = "0.5.0", default_features = false, features = ["macros", "postgres", "runtime-tokio-rustls"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 toml = "0.5"
 
 openssl-sys = "*"

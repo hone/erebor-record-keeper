@@ -4,7 +4,6 @@ use serenity::{
     model::channel::Message,
     prelude::Context,
 };
-use sqlx::prelude::Done;
 use std::time::Duration;
 
 #[command]

@@ -1,4 +1,4 @@
-use sqlx::{postgres::PgPool, prelude::Done};
+use sqlx::postgres::PgPool;
 
 pub struct Event {
     pub id: i64,

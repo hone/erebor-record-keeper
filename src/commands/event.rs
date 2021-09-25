@@ -10,7 +10,6 @@ use serenity::{
     prelude::Context,
     utils::MessageBuilder,
 };
-use sqlx::prelude::Done;
 use std::collections::HashMap;
 
 pub mod admin;
