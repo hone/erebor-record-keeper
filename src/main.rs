@@ -34,7 +34,7 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(challenge, quest)]
+#[commands(gauntlet, quest)]
 struct General;
 
 #[group]

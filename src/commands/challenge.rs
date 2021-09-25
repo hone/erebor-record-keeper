@@ -9,7 +9,7 @@ use serenity::{
 #[usage = ""]
 #[example = ""]
 /// Display a random gautlet challenge
-pub async fn challenge(ctx: &Context, msg: &Message) -> CommandResult {
+pub async fn gauntlet(ctx: &Context, msg: &Message) -> CommandResult {
     let data = ctx.data.read().await;
     let pool = data
         .get::<PostgresPool>()
