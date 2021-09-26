@@ -73,7 +73,7 @@ async fn my_help(
 }
 
 #[tokio::main]
-async fn main() -> anyhow::Result<()> {
+async fn main() {
     #[cfg(debug_assertions)]
     dotenv::dotenv().ok();
 
@@ -87,7 +87,8 @@ async fn main() -> anyhow::Result<()> {
     let pool = PgPoolOptions::new()
         .max_connections(5)
         .connect(&database_url)
-        .await?;
+        .await
+        .expect("Unable to connect to Postgres.");
 
     let mut client = Client::builder(discord_token)
         .event_handler(Handler)
@@ -98,7 +99,8 @@ async fn main() -> anyhow::Result<()> {
                 .group(&EVENT_GROUP)
                 .group(&GENERAL_GROUP),
         )
-        .await?;
+        .await
+        .expect("Error creating client.");
     {
         let mut data = client.data.write().await;
         data.insert::<utils::PostgresPool>(pool);
@@ -108,8 +110,6 @@ async fn main() -> anyhow::Result<()> {
     if let Err(why) = client.start().await {
         println!("An error occurred while running the client: {:?}", why);
     }
-
-    Ok(())
 }
 
 fn parse_channels(input: &str) -> anyhow::Result<HashSet<ChannelId>> {
