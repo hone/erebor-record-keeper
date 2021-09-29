@@ -8,25 +8,25 @@ attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Bigger and Badder"
-description = "Modification - During stage 1A setup, engage a Southron Archer instead of an Umbar Sentry."
+description = "**Modification** - During stage 1A setup, engage a Southron Archer instead of an Umbar Sentry."
 scenario = "Escape from Umbar"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Are We Lost?"
-description = "Setup - Add each encounter side quest to the staging area (Craft Remedy and Find Water)."
+description = "**Setup** - Add each encounter side quest to the staging area (Craft Remedy and Find Water)."
 scenario = "Desert Crossing"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "The Spice Must Flow"
-description = "Setup - Add a Were-worm to the staging area (two in a 3 or 4 player game)."
+description = "**Setup** - Add a Were-worm to the staging area (two in a 3 or 4 player game)."
 scenario = "Desert Crossing"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "The Long Snout of Mordor"
-description = "Setup - Reveal a Mordor Warg (two in a 3-4 player game)."
+description = "**Setup** - Reveal a Mordor Warg (two in a 3-4 player game)."
 scenario = "The Long Arm of Mordor"
 attributes = ["Con of the Rings 2020"]
 
@@ -38,19 +38,19 @@ attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Hey, it's Like the Jungle Book"
-description = "Setup - Add a Strangling Python, Territorial Ape, and Harad Tiger to the staging area"
+description = "**Setup** - Add a Strangling Python, Territorial Ape, and Harad Tiger to the staging area"
 scenario = "The Mûmakil"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Can't See the Jungle Through the Gorillas"
-description = "Setup - Add Guardians in the Jungle to the staging area."
+description = "**Setup** - Add Guardians in the Jungle to the staging area."
 scenario = "The Mûmakil"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Merely a Mirage"
-description = "Setup - Remove both copies of Desert Oasis from the game."
+description = "**Setup** - Remove both copies of Desert Oasis from the game."
 scenario = "Race Across Harad"
 attributes = ["Con of the Rings 2020"]
 
@@ -62,13 +62,13 @@ attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Get Away From Her, You..."
-description = "Modification - Brood Mother gains: \"Forced: After Brood Mother engages you, it makes an immediate attack\"."
+description = "**Modification** - Brood Mother gains: \"Forced: After Brood Mother engages you, it makes an immediate attack\"."
 scenario = "Beneath the Sands"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "No One Left Behind"
-description = "Modification - The On Track objective gains: \"Forced: After a character is destroyed, flip this objective.\""
+description = "**Modification** - The On Track objective gains: \"Forced: After a character is destroyed, flip this objective.\""
 scenario = "Beneath the Sands"
 attributes = ["Con of the Rings 2020"]
 
@@ -80,7 +80,7 @@ attributes = ["Con of the Rings 2020", "climactic"]
 
 [[challenge]]
 name = "It Gets Worse"
-description = "Setup - Add the Southron Champion side quest to the staging area. Add Southron Captain to the staging area as the \"champion\"."
+description = "**Setup** - Add the Southron Champion side quest to the staging area. Add Southron Captain to the staging area as the \"champion\"."
 scenario = "The Black Serpent"
 attributes = ["Con of the Rings 2020", "climactic"]
 
@@ -92,37 +92,37 @@ attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "The Eye is Upon Us"
-description = "Setup - Add Uruks of the Eye to the staging area. Progress cannot be placed on this side quest."
+description = "**Setup** - Add Uruks of the Eye to the staging area. Progress cannot be placed on this side quest."
 scenario = "The Dungeons of Cirith Gurat"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Mordor BOGO!"
-description = "Modification - When an encounter effect has you retrieve an encounter card from a set aside encounter set, retrieve an additional card from that set."
+description = "**Modification** - When an encounter effect has you retrieve an encounter card from a set aside encounter set, retrieve an additional card from that set."
 scenario = "The Crossings of Poros"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Problem for Future Me"
-description = "Modification - Whenever given the choice to retrieve a card from a set aside encounter set, choose that option."
+description = "**Modification** - Whenever given the choice to retrieve a card from a set aside encounter set, choose that option."
 scenario = "The Crossings of Poros"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Deja Vu"
-description = "Setup - Add a Hill Troll to the staging area (two in a 3 or 4 player game)."
+description = "**Setup** - Add a Hill Troll to the staging area (two in a 3 or 4 player game)."
 scenario = "Journey Up the Anduin"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "We Don't Know the Way"
-description = "Setup - Add one Hills of Wilderland to the staging area. Keep that copy of Hills of Wilderland in the staging area all game."
+description = "**Setup** - Add one Hills of Wilderland to the staging area. Keep that copy of Hills of Wilderland in the staging area all game."
 scenario = "Journey Up the Anduin"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Really, Really Lost"
-description = "Modification - The heroes must pass through quests 3A and 3C (when an objective location would send you to stage four, go to the other stage three instead)."
+description = "**Modification** - The heroes must pass through quests 3A and 3C (when an objective location would send you to stage four, go to the other stage three instead)."
 scenario = "Lost in Mirkwood"
 attributes = ["Con of the Rings 2020"]
 
@@ -140,7 +140,7 @@ attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Traveller's Guide to Eregion"
-description = "Modification - For the forced effect on stage 1B, always choose to add the location to the staging area."
+description = "**Modification** - For the forced effect on stage 1B, always choose to add the location to the staging area."
 scenario = "The King's Quest"
 attributes = ["Con of the Rings 2020"]
 
@@ -164,7 +164,7 @@ attributes = ["Con of the Rings 2020", "climactic"]
 
 [[challenge]]
 name = "Extremely Hazardous"
-description = "Modification - While resolving the Discover keyword, reveal each card with the Hazard trait (instead of a random one)."
+description = "**Modification** - While resolving the Discover keyword, reveal each card with the Hazard trait (instead of a random one)."
 scenario = "The Ruins of Belegost"
 attributes = ["Con of the Rings 2020", "climactic"]
 
@@ -176,7 +176,7 @@ attributes = ["Con of the Rings 2020", "climactic"]
 
 [[challenge]]
 name = "Corsair Roulette"
-description = "Modification - When players prepare their fleet, each player gets assigned a ship at random."
+description = "**Modification** - When players prepare their fleet, each player gets assigned a ship at random."
 scenario = "The Hunt for the Dreadnaught"
 attributes = ["Con of the Rings 2020", "climactic"]
 
@@ -188,7 +188,7 @@ attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Worthless"
-description = "Modification - At the start of the round, exhaust Tiny and Urdug (if controlled by the players)."
+description = "**Modification** - At the start of the round, exhaust Tiny and Urdug (if controlled by the players)."
 scenario = "Roam Across Rhovanion"
 attributes = ["Con of the Rings 2020"]
 
@@ -212,13 +212,13 @@ attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "Better Mode"
-description = "Modification - When a loot objective enters the discard pile, shuffle it into the encounter deck."
+description = "**Modification** - When a loot objective enters the discard pile, shuffle it into the encounter deck."
 scenario = "The Ghost of Framsburg"
 attributes = ["Con of the Rings 2020"]
 
 [[challenge]]
 name = "The Cube of Doom"
-description = "Modification - When resolving questing, roll one D6 and add that much threat to the staging area until the end of the phase."
+description = "**Modification** - When resolving questing, roll one D6 and add that much threat to the staging area until the end of the phase."
 scenario = "Mount Gundabad"
 attributes = ["Con of the Rings 2020", "climactic"]
 
