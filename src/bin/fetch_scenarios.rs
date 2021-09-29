@@ -18,7 +18,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let scenarios = fetch().await?;
     let mut sets = HashMap::new();
     for scenario in scenarios {
-        let queried_sets = sqlx::query!(
+        let queried_set = sqlx::query!(
             r#"
 SELECT id
 FROM sets
@@ -26,10 +26,12 @@ WHERE name = $1;
 "#,
             scenario.set
         )
-        .fetch_all(&pool)
+        .fetch_optional(&pool)
         .await?;
 
-        let set_id = if queried_sets.is_empty() {
+        let set_id = if let Some(set) = queried_set {
+            set.id
+        } else {
             let set = sqlx::query!(
                 r#"
 INSERT INTO sets ( name )
@@ -42,27 +44,44 @@ RETURNING id;
             .await?;
 
             set.id
-        } else {
-            queried_sets[0].id
         };
 
         sets.insert(scenario.set.clone(), set_id);
 
-        sqlx::query!(
+        let existing_scenario = sqlx::query!(
             r#"
+SELECT id
+FROM scenarios
+WHERE title = $1
+  AND set_id = $2
+  AND number = $3
+        "#,
+            scenario.title,
+            set_id,
+            scenario.number
+        )
+        .fetch_optional(&pool)
+        .await?;
+
+        if existing_scenario.is_none() {
+            println!("ADDING {:?}", scenario);
+
+            sqlx::query!(
+                r#"
 INSERT INTO scenarios ( title, set_id, number, code )
 VALUES ( $1, $2, $3, $4 )
 RETURNING id;
         "#,
-            scenario.title,
-            set_id,
-            scenario.number,
-            generate_code(set_id, scenario.number),
-        )
-        .fetch_one(&pool)
-        .await?;
-
-        println!("{:?}", scenario);
+                scenario.title,
+                set_id,
+                scenario.number,
+                generate_code(set_id, scenario.number),
+            )
+            .fetch_one(&pool)
+            .await?;
+        } else {
+            println!("EXISTS {:?}", scenario);
+        }
     }
 
     Ok(())

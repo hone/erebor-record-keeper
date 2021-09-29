@@ -1,6 +1,14 @@
 use serde::Deserialize;
 use std::collections::HashMap;
 
+const FIRST_AGE_PRODUCTS: &[&str] = &[
+    "First Age",
+    "Trial Upon the Marches",
+    "Among the Outlaws",
+    "The Betrayal of Mîm",
+    "The Fall of Nargothrond",
+];
+
 #[derive(Deserialize)]
 #[serde(rename_all = "PascalCase")]
 struct HobScenario {
@@ -34,6 +42,7 @@ pub async fn fetch() -> Result<Vec<Scenario>, Box<dyn std::error::Error>> {
     deluxes.insert("The Sands of Harad", "Haradrim");
     deluxes.insert("The Wilds of Rhovanion", "Ered Mithrin");
     deluxes.insert("A Shadow in the East", "Vengeance of Mordor");
+    deluxes.insert("Children of Eorl", "Oaths of the Rohirrim");
     let others = [
         "The Hobbit: Over Hill and Under Hill",
         "The Hobbit: On the Doorstep",
@@ -51,14 +60,17 @@ pub async fn fetch() -> Result<Vec<Scenario>, Box<dyn std::error::Error>> {
     let mut standalone_scenario_number = 0;
     let scenarios = hob_scenarios
         .into_iter()
-        .filter(|s| s.product != "First Age")
+        .filter(|s| !FIRST_AGE_PRODUCTS.contains(&s.product.as_str()))
         .map(|s| {
             // figure out which set we're in
             if s.product != last_deluxe && deluxes.contains_key(s.product.as_str()) {
                 last_deluxe = s.product.clone();
             }
 
-            let set = if s.product.parse::<u32>().is_ok() {
+            let set = if s.product.parse::<u32>().is_ok()
+                || s.product == "The Hunt for the Dreadnaught"
+                || s.product == "The Scouring of the Shire"
+            {
                 standalone_scenario_number += 1;
                 "Standalone Scenarios".to_string()
             } else if others.iter().find(|&&o| o == s.product).is_some() {
@@ -70,7 +82,15 @@ pub async fn fetch() -> Result<Vec<Scenario>, Box<dyn std::error::Error>> {
             };
 
             let number = if set == "Standalone Scenarios" {
-                standalone_scenario_number
+                // Hall of Beorn changed the order of these products, so the scenario counter will
+                // be wrong
+                if s.title == "Fog on the Barrow-downs" {
+                    5
+                } else if s.title == "The Ruins of Belegost" {
+                    6
+                } else {
+                    standalone_scenario_number
+                }
             } else {
                 s.number
             };
