@@ -12,24 +12,24 @@ use serenity::{
     client::Client,
     framework::standard::{
         help_commands,
-        macros::{group, help},
+        macros::{group, help, hook},
         Args, CommandGroup, CommandResult, HelpOptions, StandardFramework,
     },
     model::{
         gateway::Ready,
-        id::ChannelId,
         prelude::{Message, UserId},
     },
     prelude::{Context, EventHandler},
 };
 use sqlx::postgres::PgPoolOptions;
-use std::collections::HashSet;
+use std::{collections::HashSet, process::exit};
+use tracing::{error, info, instrument};
 
 struct Handler;
 #[async_trait]
 impl EventHandler for Handler {
     async fn ready(&self, _: Context, ready: Ready) {
-        println!("{} is connected!", ready.user.name);
+        info!("{} is connected!", ready.user.name);
     }
 }
 
@@ -72,10 +72,21 @@ async fn my_help(
     Ok(())
 }
 
+#[hook]
+#[instrument]
+async fn before_hook(_: &Context, msg: &Message, command_name: &str) -> bool {
+    info!(command = command_name, user = msg.author.name.as_str());
+
+    true
+}
+
 #[tokio::main]
+#[instrument]
 async fn main() {
     #[cfg(debug_assertions)]
     dotenv::dotenv().ok();
+
+    tracing_subscriber::fmt::init();
 
     let discord_token =
         std::env::var("DISCORD_TOKEN").expect("Please provide the env var DISCORD_TOKEN");
@@ -86,26 +97,34 @@ async fn main() {
         .max_connections(5)
         .connect(&database_url)
         .await
-        .expect("Unable to connect to Postgres.");
+        .unwrap_or_else(|_| {
+            error!("Unable to connect to Postgres.");
+            exit(1);
+        });
 
     let mut client = Client::builder(discord_token)
         .event_handler(Handler)
         .framework(
             StandardFramework::new()
                 .configure(|c| c.prefix("!"))
+                .before(before_hook)
                 .help(&MY_HELP)
                 .group(&EVENT_GROUP)
                 .group(&GENERAL_GROUP),
         )
         .await
-        .expect("Error creating client.");
+        .unwrap_or_else(|_| {
+            error!("Error creating client");
+            exit(1);
+        });
     {
         let mut data = client.data.write().await;
         data.insert::<utils::PostgresPool>(pool);
-        println!("Connected to Postgres.");
+        info!("Connected to Postgres.");
     }
 
     if let Err(why) = client.start().await {
-        println!("An error occurred while running the client: {:?}", why);
+        error!("An error occurred while running the client: {:?}", why);
+        exit(1);
     }
 }
