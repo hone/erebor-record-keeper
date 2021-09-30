@@ -1,6 +1,9 @@
-use crate::models::set::Set;
-use serenity::{model::channel::Message, prelude::Context, prelude::TypeMapKey};
+use crate::models::{challenge::Challenge, scenario::Scenario, set::Set};
+use serenity::{
+    model::channel::Message, prelude::Context, prelude::TypeMapKey, utils::MessageBuilder,
+};
 use std::time::Duration;
+use tracing::error;
 
 pub const SELECTION_TIMEOUT: u64 = 60;
 
@@ -87,6 +90,41 @@ pub async fn pick_sets(ctx: &Context, msg: &Message) -> anyhow::Result<Option<i6
 /// Checks that a message successfully sent; if not, then logs why to stderr.
 pub fn check_msg(result: serenity::Result<Message>) {
     if let Err(why) = result {
-        eprintln!("Error sending message: {:?}", why);
+        error!("Error sending message: {:?}", why);
     }
+}
+
+/// Display Challenges grouped by Scenario
+pub fn format_challenges_by_scenario<'a>(
+    scenarios: impl std::iter::Iterator<Item = (&'a Scenario, &'a Vec<Challenge>)> + Clone,
+) -> Vec<String> {
+    let width = scenarios.clone().count() / 10;
+    scenarios
+        .into_iter()
+        .enumerate()
+        .map(|(i, (scenario, challenges))| {
+            let mut content = MessageBuilder::new();
+
+            content.push(format!(
+                "{:>width$}.) {}\n",
+                i + 1,
+                scenario.title,
+                width = width
+            ));
+            for challenge in challenges.into_iter() {
+                content.push(format!(
+                    "- (Code: **{}**) *{}* - {}\n",
+                    challenge.code,
+                    challenge.name,
+                    challenge
+                        .description
+                        .as_ref()
+                        .map(|s| String::from(s))
+                        .unwrap_or_else(|| String::from(""))
+                ));
+            }
+
+            content.build()
+        })
+        .collect()
 }

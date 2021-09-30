@@ -1,5 +1,6 @@
 use crate::models::scenario::Scenario;
 use sqlx::postgres::PgPool;
+use std::collections::BTreeMap;
 
 #[derive(Clone)]
 pub struct Challenge {
@@ -60,4 +61,17 @@ event_id
 
         Ok(challenges)
     }
+}
+
+pub fn group_by_scenario(challenges: Vec<Challenge>) -> BTreeMap<Scenario, Vec<Challenge>> {
+    let mut scenarios: BTreeMap<Scenario, Vec<Challenge>> = BTreeMap::new();
+
+    for challenge in challenges.into_iter() {
+        if let Some(scenario) = challenge.scenario.clone() {
+            let value = scenarios.entry(scenario).or_insert(Vec::new());
+            value.push(challenge);
+        }
+    }
+
+    scenarios
 }
