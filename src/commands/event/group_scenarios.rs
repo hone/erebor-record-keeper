@@ -1,3 +1,5 @@
+//! Collection of commands for Events with scenario based group wide completion
+
 use crate::{
     commands::quest,
     models::{event::Event, user::User},
