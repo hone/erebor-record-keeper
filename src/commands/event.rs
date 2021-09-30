@@ -1,7 +1,7 @@
 use crate::utils::PostgresPool;
 use crate::{
     commands::quest,
-    models::{event::Event, user::User},
+    models::{challenge::Challenge, event::Event, scenario::Scenario, user::User},
     utils,
 };
 use serenity::{
@@ -10,7 +10,7 @@ use serenity::{
     prelude::Context,
     utils::MessageBuilder,
 };
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 
 pub mod admin;
 pub mod kang;
@@ -432,27 +432,9 @@ pub async fn cgroup(ctx: &Context, msg: &Message) -> CommandResult {
         }
     };
 
-    let rows = sqlx::query!(
-        r#"
-SELECT challenges.name, challenges.code, challenges.description, scenarios.title
-FROM challenges_events, challenges, scenarios
-WHERE challenges_events.challenge_id = challenges.id
-    AND challenges.scenario_id = scenarios.id
-    AND challenges.scenario_id = scenarios.id
-    AND challenges_events.event_id = $1
-    AND challenges.id NOT IN (
-        SELECT challenges_events.challenge_id
-        FROM challenges_events_users, challenges_events
-        WHERE challenges_events_users.challenges_events_id = challenges_events.id
-            AND challenges_events.event_id = $1
-    )
-"#,
-        event.id
-    )
-    .fetch_all(pool)
-    .await?;
+    let challenges = Challenge::find_incompleted_by_event(&pool, event.id).await?;
 
-    if rows.is_empty() {
+    if challenges.is_empty() {
         msg.channel_id
             .say(&ctx.http, "No challenges found.")
             .await?;
@@ -460,29 +442,30 @@ WHERE challenges_events.challenge_id = challenges.id
         return Ok(());
     }
 
-    let mut scenarios: HashMap<&str, Vec<ChallengeRow>> = HashMap::new();
-
-    for row in rows.iter() {
-        scenarios.entry(&row.title).or_insert(Vec::new());
-        let value = scenarios.get_mut(&row.title.as_str()).unwrap();
-        value.push(ChallengeRow {
-            name: &row.name,
-            code: &row.code,
-            description: row.description.as_ref().map(|a| a.as_str()),
-        });
+    let mut scenarios: BTreeMap<Scenario, Vec<Challenge>> = BTreeMap::new();
+    for challenge in challenges.into_iter() {
+        if let Some(scenario) = challenge.scenario.clone() {
+            let value = scenarios.entry(scenario).or_insert(Vec::new());
+            value.push(challenge);
+        }
     }
 
     let width = scenarios.len() / 10;
-    for (i, (scenario, challenges)) in scenarios.iter().enumerate() {
+    for (i, (scenario, challenges)) in scenarios.into_iter().enumerate() {
         let mut content = MessageBuilder::new();
 
-        content.push(format!("{:>width$}.) {}\n", i + 1, scenario, width = width));
-        for challenge in challenges.iter() {
+        content.push(format!(
+            "{:>width$}.) {}\n",
+            i + 1,
+            scenario.title,
+            width = width
+        ));
+        for challenge in challenges.into_iter() {
             content.push(format!(
                 "- (Code: **{}**) *{}* - {}\n",
                 challenge.code,
                 challenge.name,
-                challenge.description.unwrap_or_else(|| "")
+                challenge.description.unwrap_or_else(|| String::from(""))
             ));
         }
 
