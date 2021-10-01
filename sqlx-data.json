@@ -1,0 +1,452 @@
+{
+  "db": "PostgreSQL",
+  "194173ee436a9298dc5a399e7a82af9a294782b937a29a6e659402473e303734": {
+    "query": "\nSELECT id, title, code, set_id, number\nFROM scenarios\nWHERE title = $1\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "title",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 3,
+          "name": "set_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 4,
+          "name": "number",
+          "type_info": "Int2"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    }
+  },
+  "211892133041ef83e891e13d93b0f4bf7dee0eb5b0f573f86dd9145aa413611a": {
+    "query": "\nSELECT challenges.id, challenges.name, challenges.code, challenges.description, scenarios.id AS scenario_id, scenarios.title AS scenario_title, scenarios.code AS scenario_code, scenarios.set_id AS scenario_set_id, scenarios.number AS scenario_number\nFROM challenges_events, challenges, scenarios\nWHERE challenges_events.event_id = $1\n    AND challenges_events.challenge_id = challenges.id\n    AND challenges.scenario_id = scenarios.id\n    AND challenges_events.active_date <= CURRENT_TIMESTAMP\n    AND challenges.id IN (\n        SELECT challenges_events.challenge_id\n        FROM challenges_events_users, challenges_events\n        WHERE challenges_events_users.challenges_events_id = challenges_events.id\n            AND challenges_events.event_id = $1\n    )\nORDER by challenges.code\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 3,
+          "name": "description",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "scenario_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 5,
+          "name": "scenario_title",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 6,
+          "name": "scenario_code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 7,
+          "name": "scenario_set_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 8,
+          "name": "scenario_number",
+          "type_info": "Int2"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    }
+  },
+  "2950c6be001d58b6421357bec3c799348ccc90de14f0392cc5e15b14e23bb83a": {
+    "query": "\nSELECT id, discord_id, name\nFROM users\nWHERE discord_id = $1\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "discord_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 2,
+          "name": "name",
+          "type_info": "Varchar"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        true
+      ]
+    }
+  },
+  "435dea61627fd70038f53e094677ae1dd4faca3915d75aebf0415dcc0c367dac": {
+    "query": "\nSELECT challenges.id, challenges.name, challenges.code, challenges.description, scenarios.id AS scenario_id, scenarios.title AS scenario_title, scenarios.code AS scenario_code, scenarios.set_id AS scenario_set_id, scenarios.number AS scenario_number\nFROM challenges_events, challenges, scenarios\nWHERE challenges_events.challenge_id = challenges.id\n    AND challenges.scenario_id = scenarios.id\n    AND challenges.scenario_id = scenarios.id\n    AND challenges_events.event_id = $1\n    AND challenges_events.active_date <= CURRENT_TIMESTAMP\n    AND challenges.id NOT IN (\n        SELECT challenges_events.challenge_id\n        FROM challenges_events_users, challenges_events\n        WHERE challenges_events_users.challenges_events_id = challenges_events.id\n            AND challenges_events.event_id = $1\n    )\nORDER BY challenges.code\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 3,
+          "name": "description",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "scenario_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 5,
+          "name": "scenario_title",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 6,
+          "name": "scenario_code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 7,
+          "name": "scenario_set_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 8,
+          "name": "scenario_number",
+          "type_info": "Int2"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    }
+  },
+  "7041434bca5e390f5b07474bbb2229d7f9a3a604363f1361db12b51b9f967345": {
+    "query": "\nINSERT INTO users (discord_id, name)\nVALUES ($1, $2)\nON CONFLICT (discord_id)\nDO\n    UPDATE SET name = $2,\n        updated_at = CURRENT_TIMESTAMP\n        ",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Varchar"
+        ]
+      },
+      "nullable": []
+    }
+  },
+  "71ef59f43885a10a01825930dea928c038c9494f94766e333992d7705c732e08": {
+    "query": "\nSELECT challenges.id, challenges.name, challenges.code, challenges.description, scenarios.id AS scenario_id, scenarios.title AS scenario_title, scenarios.code AS scenario_code, scenarios.set_id AS scenario_set_id, scenarios.number AS scenario_number\nFROM challenges_events, challenges, scenarios\nWHERE challenges_events.challenge_id = challenges.id\n    AND challenges.scenario_id = scenarios.id\n    AND challenges.scenario_id = scenarios.id\n    AND challenges_events.event_id = $1\n    AND challenges_events.active_date <= CURRENT_TIMESTAMP\nORDER BY challenges.code\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 3,
+          "name": "description",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "scenario_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 5,
+          "name": "scenario_title",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 6,
+          "name": "scenario_code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 7,
+          "name": "scenario_set_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 8,
+          "name": "scenario_number",
+          "type_info": "Int2"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    }
+  },
+  "836657d49e52261f72e5fc9bab133f24f861d4a3a42ebb2e78d11e90d1100d9f": {
+    "query": "\nSELECT id, name\nFROM sets\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Varchar"
+        }
+      ],
+      "parameters": {
+        "Left": []
+      },
+      "nullable": [
+        false,
+        false
+      ]
+    }
+  },
+  "93ce21d872808e8cee6c892fe009b252828834195347816e3d85ffb38910ff0f": {
+    "query": "\nSELECT id, name\nFROM events\nWHERE active = $1\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Varchar"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Bool"
+        ]
+      },
+      "nullable": [
+        false,
+        false
+      ]
+    }
+  },
+  "9bcb79c13d8a52327c29efa9f19d4be3bffc036b2112daa597a5a471f3ea0fe3": {
+    "query": "\nSELECT challenges.id, challenges.name, challenges.code, challenges.description, scenarios.id AS scenario_id, scenarios.title AS scenario_title, scenarios.code AS scenario_code, scenarios.set_id AS scenario_set_id, scenarios.number AS scenario_number\nFROM challenges_events, challenges, scenarios\nWHERE challenges_events.challenge_id = challenges.id\n    AND challenges.scenario_id = scenarios.id\n    AND challenges.scenario_id = scenarios.id\n    AND challenges_events.event_id = $1\nORDER BY challenges.code\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 3,
+          "name": "description",
+          "type_info": "Text"
+        },
+        {
+          "ordinal": 4,
+          "name": "scenario_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 5,
+          "name": "scenario_title",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 6,
+          "name": "scenario_code",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 7,
+          "name": "scenario_set_id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 8,
+          "name": "scenario_number",
+          "type_info": "Int2"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    }
+  },
+  "9c2638b46aeb5e6028ded3ecd8b7d019edcd885a90c5ffc0fecd508de6443b88": {
+    "query": "\nSELECT id, name\nFROM events\nWHERE archive = $1\n",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Int8"
+        },
+        {
+          "ordinal": 1,
+          "name": "name",
+          "type_info": "Varchar"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Bool"
+        ]
+      },
+      "nullable": [
+        false,
+        false
+      ]
+    }
+  },
+  "dd360228c449d1bf74e90ef6e1ad164f18ad575c86a6ac09c60c3ab962d6eef6": {
+    "query": "INSERT INTO events ( name ) VALUES ( $1 )",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Varchar"
+        ]
+      },
+      "nullable": []
+    }
+  }
+}
