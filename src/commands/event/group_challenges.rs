@@ -10,7 +10,7 @@ use serenity::{
 };
 
 #[command]
-#[aliases("challenges")]
+#[aliases("challenge", "challenges")]
 #[usage = ""]
 #[example = ""]
 /// List group challenges left

@@ -6,6 +6,7 @@ use serenity::{
 };
 
 #[command]
+#[aliases("pain")]
 #[usage = ""]
 #[example = ""]
 /// Display a random gautlet challenge
