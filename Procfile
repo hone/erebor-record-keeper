@@ -1,1 +1,1 @@
-web: ./target/release/erebor-record-keeper
+discord: ./target/release/erebor-record-keeper
