@@ -23,6 +23,9 @@ impl PartialOrd for Scenario {
 }
 
 impl Scenario {
+    // this is used by  src/bin/load_challenges.rs
+    #[allow(dead_code)]
+    /// Find a scenaario by title
     pub async fn find_by_title(pool: &PgPool, title: &str) -> anyhow::Result<Option<Scenario>> {
         let mut scenarios = sqlx::query_as!(
             Scenario,

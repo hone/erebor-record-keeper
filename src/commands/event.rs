@@ -351,7 +351,7 @@ ON CONFLICT DO NOTHING
 }
 
 #[command]
-#[aliases("progress")]
+#[aliases("my-progress")]
 #[usage = ""]
 #[example = ""]
 /// Display your challenge progress

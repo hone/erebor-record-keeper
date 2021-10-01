@@ -11,6 +11,7 @@ const FIRST_AGE_PRODUCTS: &[&str] = &[
 
 #[derive(Deserialize)]
 #[serde(rename_all = "PascalCase")]
+#[allow(dead_code)]
 struct HobScenario {
     pub title: String,
     pub slug: String,

@@ -10,6 +10,7 @@ use serenity::{
 };
 
 #[command]
+#[aliases("challenges")]
 #[usage = ""]
 #[example = ""]
 /// List group challenges left
@@ -50,6 +51,7 @@ pub async fn cgroup(ctx: &Context, msg: &Message) -> CommandResult {
 }
 
 #[command]
+#[aliases("all-challenges")]
 #[usage = ""]
 #[example = ""]
 /// List all group challenges
@@ -90,6 +92,7 @@ pub async fn cgroupall(ctx: &Context, msg: &Message) -> CommandResult {
 }
 
 #[command]
+#[aliases("progress")]
 #[usage = ""]
 #[example = ""]
 /// Show progress on group challenges
