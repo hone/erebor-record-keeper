@@ -58,7 +58,10 @@ FROM challenges_events, challenges, scenarios
 WHERE challenges_events.event_id = $1
     AND challenges_events.challenge_id = challenges.id
     AND challenges.scenario_id = scenarios.id
-    AND challenges_events.active_date <= CURRENT_TIMESTAMP
+    AND (
+        challenges_events.active_date <= CURRENT_TIMESTAMP
+        OR challenges_events.active_date IS NULL
+    )
     AND challenges.id IN (
         SELECT challenges_events.challenge_id
         FROM challenges_events_users, challenges_events
@@ -148,7 +151,10 @@ WHERE challenges_events.challenge_id = challenges.id
     AND challenges.scenario_id = scenarios.id
     AND challenges.scenario_id = scenarios.id
     AND challenges_events.event_id = $1
-    AND challenges_events.active_date <= CURRENT_TIMESTAMP
+    AND (
+        challenges_events.active_date <= CURRENT_TIMESTAMP
+        OR challenges_events.active_date IS NULL
+    )
 ORDER BY challenges.code
 "#,
             self.id
@@ -192,7 +198,10 @@ WHERE challenges_events.challenge_id = challenges.id
     AND challenges.scenario_id = scenarios.id
     AND challenges.scenario_id = scenarios.id
     AND challenges_events.event_id = $1
-    AND challenges_events.active_date <= CURRENT_TIMESTAMP
+    AND (
+        challenges_events.active_date <= CURRENT_TIMESTAMP
+        OR challenges_events.active_date IS NULL
+    )
     AND challenges.id NOT IN (
         SELECT challenges_events.challenge_id
         FROM challenges_events_users, challenges_events
