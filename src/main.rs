@@ -4,7 +4,7 @@ mod utils;
 
 use commands::{
     challenge::*,
-    event::{admin::*, kang::*, *},
+    event::{admin::*, group_challenges::*, group_scenarios::*, kang::*, *},
     quest::*,
 };
 use serenity::{
@@ -41,7 +41,7 @@ struct General;
 #[prefix = "event"]
 #[description = "Set of Commands for interacting with an event."]
 #[sub_groups("EventAdmin", "EventKang")]
-#[commands(call, ccomplete, cgroup, cprogress, cquest)]
+#[commands(call, ccomplete, cgroup, cgroupall, cprogress, cquest)]
 struct Event;
 
 #[group]
