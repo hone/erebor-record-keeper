@@ -372,21 +372,7 @@ pub async fn cprogress(ctx: &Context, msg: &Message) -> CommandResult {
         }
     };
 
-    let challenge_count = sqlx::query!(
-        r#"
-SELECT COUNT(*)
-FROM challenges_events, challenges
-WHERE challenges_events.event_id = $1
-    AND challenges_events.challenge_id = challenges.id
-    AND 'Gauntlet' <> ALL (challenges.attributes)
-"#,
-        event.id
-    )
-    .fetch_one(pool)
-    .await?
-    .count
-    .unwrap();
-
+    let all_challenges = event.find_all_challenges(&pool).await?;
     let completed_challenges = sqlx::query!(
         r#"
 SELECT challenges.name, challenges.code, challenges.description, scenarios.title
@@ -397,7 +383,6 @@ WHERE challenges_events_users.challenges_events_id = challenges_events.id
     AND users.discord_id = $2
     AND challenges_events.challenge_id = challenges.id
     AND challenges.scenario_id = scenarios.id
-    AND 'Gauntlet' <> ALL (challenges.attributes)
 "#,
         event.id,
         *msg.author.id.as_u64() as i64
@@ -410,8 +395,8 @@ WHERE challenges_events_users.challenges_events_id = challenges_events.id
         format!(
             "You've completed {} of {} total challenges: {:.2}%",
             completed_challenges.len(),
-            challenge_count,
-            (completed_challenges.len() as f32 / challenge_count as f32) * 100.0
+            all_challenges.len(),
+            (completed_challenges.len() as f32 / all_challenges.len() as f32) * 100.0
         ),
     )
     .await?;
