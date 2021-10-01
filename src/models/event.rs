@@ -89,7 +89,7 @@ ORDER by challenges.code
                     id: row.id,
                     name: row.name.clone(),
                     code: row.code.clone(),
-                    description: Some(row.code.clone()),
+                    description: row.description,
                     scenario: Some(scenario),
                 }
             })
@@ -129,7 +129,7 @@ ORDER BY challenges.code
                     id: row.id,
                     name: row.name.clone(),
                     code: row.code.clone(),
-                    description: Some(row.code.clone()),
+                    description: row.description,
                     scenario: Some(scenario),
                 }
             })
@@ -176,7 +176,7 @@ ORDER BY challenges.code
                     id: row.id,
                     name: row.name.clone(),
                     code: row.code.clone(),
-                    description: Some(row.code.clone()),
+                    description: row.description,
                     scenario: Some(scenario),
                 }
             })
@@ -229,7 +229,7 @@ ORDER BY challenges.code
                     id: row.id,
                     name: row.name.clone(),
                     code: row.code.clone(),
-                    description: Some(row.code.clone()),
+                    description: row.description,
                     scenario: Some(scenario),
                 }
             })
