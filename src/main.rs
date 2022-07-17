@@ -111,7 +111,9 @@ async fn main() {
                 .before(before_hook)
                 .help(&MY_HELP)
                 .group(&EVENT_GROUP)
-                .group(&GENERAL_GROUP),
+                .group(&GENERAL_GROUP)
+                .group(&EVENTADMIN_GROUP)
+                .group(&EVENTKANG_GROUP),
         )
         .await
         .unwrap_or_else(|_| {
