@@ -26,7 +26,7 @@ async fn main() -> anyhow::Result<()> {
         .connect(&std::env::var("DATABASE_URL")?)
         .await?;
 
-    let set_id = sqlx::query!(
+    let set_id = match sqlx::query!(
         r#"
 INSERT INTO sets ( name )
 VALUES ( $1 )
@@ -35,22 +35,50 @@ RETURNING id
         set.name
     )
     .fetch_one(&pool)
-    .await?;
+    .await
+    {
+        Ok(record) => record.id,
+        Err(err) => {
+            if let sqlx::Error::Database(_) = err {
+                // if the record already exists, fetch the set instead of erroring out
+                sqlx::query!(
+                    r#"
+SELECT id
+FROM sets
+WHERE name = $1
+"#,
+                    set.name
+                )
+                .fetch_one(&pool)
+                .await?
+                .id
+            } else {
+                Err(err)?
+            }
+        }
+    };
 
     for scenario in set.scenarios {
-        let code = format!("{:0>2}{:0>2}", set_id.id, scenario.number);
-        sqlx::query!(
+        let code = format!("{:0>2}{:0>2}", set_id, scenario.number);
+        if let Err(err) = sqlx::query!(
             r#"
 INSERT INTO scenarios ( title, code, set_id, number )
 VALUES ( $1, $2, $3, $4 )
 "#,
             scenario.title,
             code,
-            set_id.id,
+            set_id,
             scenario.number
         )
         .execute(&pool)
-        .await?;
+        .await
+        {
+            // don't error out if the scenario already exists
+            if let sqlx::Error::Database(_) = err {
+            } else {
+                Err(err)?
+            }
+        }
     }
 
     Ok(())
